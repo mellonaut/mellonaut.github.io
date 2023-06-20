@@ -1,0 +1,35 @@
+.codebox {
+    /* Below are styles for the codebox (not the code itself) */
+    border: 1px solid black;
+    background-color: #EEEEFF;
+    width: 300px;
+    overflow: auto;
+    padding: 10px;
+    margin: 0 auto; /* Add this line to center the codebox */
+}
+
+.codebox code {
+    /* Styles in here affect the text of the codebox */
+    font-size: 1.2em;
+    color: black; /* Set the font color to black */
+    /* You can add additional styles here if needed */
+}
+
+<p></p>
+<div class="codebox">
+    <code>   
+        <span class="comment"># Test if it's requiring anything to proxy</span>
+        <p></p>
+        curl http://127.0.0.1:8080/
+        <p></p>
+        <span class="comment"># Test without Headers</span>
+        <p></p>
+        curl http://127.0.0.1:8080/https://s3cur3th1ssh1t.github.io/
+        <p></p>
+        <span class="comment"># Give S3cur3Th1sSh1t some love</span>
+        <p></p>
+        curl -H "straylight: value" -H "security: value" http://127.0.0.1:8080/https://s3cur3th1ssh1t.github.io/
+        <p></p>
+    </code>
+</div>
+<p></p>

