@@ -90,6 +90,8 @@
         }
     </style>
 </head>
+<!--  Start of Body -->
+<!-- Navbar -->
 <body>
     <div class="top-banner">
         <img src="assets/straylight.jpg" alt="Banner Image">
@@ -106,16 +108,9 @@
         <a href="code.html">Code</a>
         <a href="posts.html">Posts</a>
     </div>
+<!-- Content Starts Here -->
     <div class="content">
-        <img class="article-image" src="assets/corsandcapture1-final.png" alt="Article Image">
-        <!-- <h2>The Goal</h2>
-        <p class="center-block">
-            I decided to focus on device codes as a reliable means of initial access and spent a lot of time working out ways to make it more flexible. Generated device codes only live for 15 minutes and it became clear fairly quickly that this limitation was worth stopping what I was doing and taking the time to get a better solution in place. 
-        If we can get an access token for the MS Graph, we can use that token to create a Primary Refresh Token for that user. Access tokens are short lived but are refreshed by…you guesed it. With a PRT in hand, we can then refresh our token to each service in O365 that we want to interact with, i.e. Teams, EXO, Sharepoint and loot whatever want. 
-        This makes automation a breeze and there's a loot script here you can use. Access may be short lived in an environment with sharp analysts or good automation so the goal is to get a long lasting PRT and as much org recon and user data as possible. 
-        If you're wondering what all these tokens we're talking about are you can check out <a href="https://learn.microsoft.com/en-us/azure/active-directory/devices/concept-primary-refresh-token">this PRT Documentation</a> which should get you up to speed.
-        </p> -->
-        
+        <img class="article-image" src="assets/corsandcapture1-final.png" alt="Article Image">        
         <div class="text-box">
             <p class="center-block">
                 <h2>The Goal</h2>
@@ -455,6 +450,7 @@
                     </div>                    
         </p>
     </div>
+
 <p></p>
         <div class="text-box">        
         <p class="center-block">
@@ -465,15 +461,14 @@
             <p></p>
 While this slows us down, it gave me time to weigh the benefits of a workaround: 
 <p></p>
-<ul>
-	<li>- Hosting the lure as a landing page instead puts another layer between us and O365 email scanning.  Defender for O365 will open the link and check that page, though, as well. I wonder how many pages deep that goes. </li>
+- Hosting the lure as a landing page instead puts another layer between us and O365 email scanning.  Defender for O365 will open the link and check that page, though, as well. I wonder how many pages deep that goes. 
 	<p></p>
-    <li>- Hosting it gives us the flexibility of placing other domains or services in front or behind that server.</li>
+    - Hosting it gives us the flexibility of placing other domains or services in front or behind that server.
 	<p></p>
-    <li>- We could use it for hosting our tools with a path-based redirector and/or authentication or C2 in a pinch, we already have a tiny EC2 running the second CORS service on our phishing domain </li>
+    - We could use it for hosting our tools with a path-based redirector and/or authentication or C2 in a pinch, we already have a tiny EC2 running the second CORS service on our phishing domain 
 	<p></p>
-    <li>- I'd rather build than troubleshoot</li>
-</ul>   
+    - I'd rather build than troubleshoot
+  
     <p></p>
 We have a server on that domain that could easily host our lure as a landing page. May as well increase our return on the price of hosting it.
 <p></p>
@@ -486,17 +481,23 @@ Updog seems to work for us if we link with ?view:
 <img class="article-image" src="assets/cors/updog2.png" alt="updog">
 Let's ask our contact to give it a try.
 </p>
+</div>
 
-<h2>Blocked</h2>
-<p class="center-block">
+<p></p>
+<div class="text-box">        
+    <p class="center-block">
+    <h2>Blocked</h2>
     Point of Contact tried the link from a company device and here we are. Get through one barrier, find another. I wonder how our domain got categorized as pornography but either way it's back to the drawing board.
     <img class="article-image" src="assets/cors/blocked1.png" alt="block">
     <p></p>
     I hate. I am a super-computer programmed only to hate. Come back for Part 2 and let's see what we can do to solve this problem.
 </p>
+</div>
 
-<h2>Resources</h2>
-<p class="center-block">
+<p></p>
+<div class="text-box">        
+    <p class="center-block">
+    <h2>Resources</h2>
     <a href="https://learn.microsoft.com/en-us/azure/active-directory/develop/v2-oauth2-device-code">Device Code Flow overview from Identity Platform docs</a>
     <p></p>    
     <p></p>
@@ -505,6 +506,9 @@ Let's ask our contact to give it a try.
     <p></p>
     <a href="https://www.trustedsec.com/blog/hacking-your-cloud-tokens-edition-2-0/">    Good Token Abuse Writeup by TrustedSec:</a>
     <p></p>
-    </div>
+        </p>
+</div>
+
+<!-- End of Body -->
 </body>
 </html>
