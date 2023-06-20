@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CORS and Capture Part 1: Self-Hosting a CORS Proxy</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #333;  /* Dark grey background */
+            color: #fff;  /* White text color */
+        }
+        p.center-block {
+            width: 75%;  /* or any width */
+            margin: auto;
+            text-align: center;
+            /* border: 1px solid black;  Optional, to visualize the block */
+            padding: 10px;  /* Optional, to add some space around the text */
+        }
+        .top-banner {
+            text-align: center;
+            position: relative;
+            height: 33.33vh; /* This sets the height of the banner to be 1/3 of the viewport height. */
+        }
+        .top-banner img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* This property causes the image to be scaled and cropped to fill the banner. */
+        }
+        .top-banner div {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            transform: translateY(-50%);
+            text-align: center;
+            color: #fff;
+        }
+        .navbar {
+            background-color: #867b7b;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        .navbar a {
+            float: left;
+            display: block;
+            color: #f2f2f2;
+            border: 1px solid rgb(83, 83, 83);
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+        .navbar a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+        .code-snippet {
+            width: 66%;
+            margin: auto;
+            /* border: 1px solid black; */
+            padding: 10px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            background: #333;  /* Dark grey background */
+            color: #fff;  /* White text color */
+        }
+        .code-snippet code .comment {
+            color: #008000;  /* Green color for comments */
+        }
+        .content {
+            width: 100%;
+            text-align: center; /* Added this to center all text within the content div */
+        }
+        .article-image {
+            width: 25%;
+            height: auto;
+            display: block;
+            margin: 20px auto;
+        }
+        .text-box {
+            width: 80%; /* Adjust width as needed */
+            margin: 0 auto; /* Centers the box */
+            padding: 20px;
+            background-color: #f3f1f1;; /* Light grey background color */
+            color: #000; /* Black text color */
+            text-align: center; /* Aligns text to center */
+            border-radius: 10px; /* Optional, to make the box corners rounded */
+        }
+    </style>
+</head>
+<!--  Start of Body -->
+<!-- Navbar -->
+<body>
+    <div class="top-banner">
+        <img src="assets/straylight.jpg" alt="Banner Image">
+        <div>
+            <h1>CORS and Capture Part 2: Proxy Wars</h1>
+        </div>
+    </div>
+    <div class="navbar">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="red.html">Red</a>
+        <a href="blue.html">Blue</a>
+        <a href="cloud.html">Cloud</a>
+        <a href="code.html">Code</a>
+        <a href="posts.html">Posts</a>
+    </div>
+<!-- Content Starts Here -->
+<!-- Content Starts Here -->
+<div class="content">
+    <img class="article-image" src="assets/cors/8020rule.png" alt="Article Image">        
+    <div class="text-box">
+        <p class="center-block">
+            <h2>The 80/20 Rule</h2>
+            My friend once told me that projects follow an 80/20 rule. 80% of your most important effort will go into the lat 20% of the project. 
+            That 20% of the time accounts for 80% of the value of your project. I feel like I'm butchering the hell out of that but sounds right. 
+            The first 80 percent of the project is fun and productive and morale is high.  Not that there won't be difficulties and stress or problems and redesigns, but the last 20% of a project is where it really sucks and where you learn the most. You're so over the project, you lose your shit at every git error and you're lost on troubleshooting. I think that was this past week and we're now close to the end. The last bit of suck.
+        </p>
+    </div>
+    <p></p>
+
+    <div class="text-box">
+        <p class="center-block">
+            <h2> Where We're At</h2>
+            <p></p>
+            This is Part 2 of a series and you might be lost if you didn't read Part 1. Last time, we started working on way to keep our device codes alive for phishing. 
+            We got a working version of the lure, but ran into the problem of sending it with the Outlook client.  We had an EC2 serving CORS solely for url redirection from a good domain. 
+            The domain had been working for email but hosting a site got blocked by web-filtering by categorization. We need to get our lure hosted on a better domain. 
+            <!-- <img class="article-image" src="assets/cors/categorycheck1.png" alt="cors and capture 2"> -->
+            <p></p>
+        </p>
+    </div>
+    <p></p>
+
+    <div class="text-box">
+        <p class="center-block">
+            <h2>Dog Party</h2>
+            <p></p>
+            We ran up against a wall hosting our dynamic lure. Everything was working fine but client's web-filtering has the domain categorized as pornography. 
+            It was definitely not, and I requested re-categorization from that specific vendor but we need to pivot. I'm not sure what category my other domains are. 
+            Let's go take a look and see if one of the three I already bought for this will work.
+            <p></p>
+            Here is a site you can use to check the category of a url:
+            <a href="https://www.cyren.com/security-center/url-category-check-gate">Url Category Checker</a>
+            <img class="article-image" src="assets/cors/categorycheck1.png" alt="Category">            
+            <p></p>
+            All of my current ones are 'unknown' or 'parked domain'. Let's head back over to expireddomains.net. 
+            I highly suggest creating an account as you have way more options for searching. You can look for any TLD you want, .info is cheaper but .com seems more likely to be categorized.
+            I still had to try for a bit.
+        </p>
+    </div>
+
+    <!-- <div class="text-box">
+        <p class="center-block">
+            <h2>Placeholder</h2>
+            <p></p>
+            <img class="article-image" src="assets/background.png" alt="cors and capture 2">
+            <p></p>
+        </p>
+    </div>
+
+    <div class="text-box">
+        <p class="center-block">
+            <h2>Placeholder</h2>
+            <p></p>
+            <img class="article-image" src="assets/background.png" alt="cors and capture 2">
+            <p></p>
+        </p>
+    </div>
+
+    <div class="text-box">
+        <p class="center-block">
+            <h2>Placeholder</h2>
+            <p></p>
+            <img class="article-image" src="assets/background.png" alt="cors and capture 2">
+            <p></p>
+        </p>
+    </div> --> -->
+
+    <!-- Placeholder -->
+    <div class="text-box">
+        <p class="center-block">
+            <h2>Placeholder</h2>
+            <p></p>
+            Check back tomorrow. Updated frequently.
+            <img class="article-image" src="assets/background.png" alt="cors and capture 2">
+            <p></p>
+        </p>
+    </div>
+
+
+
+
+<p></p>
+<div class="text-box">        
+    <p class="center-block">
+    <h2>Resources</h2>
+    <a href="https://learn.microsoft.com/en-us/azure/active-directory/develop/v2-oauth2-device-code">Device Code Flow overview from Identity Platform docs</a>
+    <p></p>    
+    <p></p>
+    <a href="https://www.synacktiv.com/en/publications/azure-ad-introduction-for-red-teamers">Azure primer for Red Teamers to get you up to speed:</a>
+    <p></p>
+    <p></p>
+    <a href="https://www.trustedsec.com/blog/hacking-your-cloud-tokens-edition-2-0/">    Good Token Abuse Writeup by TrustedSec:</a>
+    <p></p>
+        </p>
+</div>
+
+<!-- End of Body -->
+</body>
+</html>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Posts</title>
+    <title>Straylight Security</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -11,10 +11,9 @@
         .thumbnail {
             width: 100px; /* Adjust width as needed */
             height: 100px; /* Adjust height as needed */
-            border: 1px solid #000; /* Optional, for a border around the image */
+            /* border: 1px solid #000; Optional, for a border around the image */
             object-fit: cover; /* Ensures the aspect ratio of the image is maintained */
         }
-
         .social-box {
             width: 300px; /* Adjust width as needed */
             margin: 0 auto; /* Centers the box */
@@ -26,7 +25,7 @@
             border-radius: 10px; /* Optional, to make the box corners rounded */
         }
         p.center-block {
-            width: 75%;  /* or any width */
+            width: 50%;  /* or any width */
             margin: auto;
             text-align: center;
             /* border: 1px solid black;  Optional, to visualize the block */
@@ -35,15 +34,10 @@
         .top-banner {
             text-align: center;
             position: relative;
-            height: 33.33vh; /* This sets the height of the banner to be 1/3 of the viewport height. */
         }
         .top-banner img {
-            position: absolute;
-            top: 0;
-            left: 0;
             width: 100%;
-            height: 100%;
-            object-fit: cover; /* This property causes the image to be scaled and cropped to fill the banner. */
+            height: auto;
         }
         .top-banner div {
             position: absolute;
@@ -54,6 +48,11 @@
             text-align: center;
             color: #fff;
         }
+        .navbar {
+            background-color: #867b7b;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
         .navbar a {
             float: left;
             display: block;
@@ -63,41 +62,13 @@
             padding: 14px 16px;
             text-decoration: none;
         }
-        .navbar a {
-            float: left;
-            display: block;
-            color: #f2f2f2;
-            text-align: center;
-            padding: 14px 16px;
-            text-decoration: none;
-        }
         .navbar a:hover {
             background-color: #ddd;
             color: black;
         }
-        .code-snippet {
-            width: 66%;
-            margin: auto;
-            border: 1px solid black;
-            padding: 10px;
-            font-family: monospace;
-            white-space: pre-wrap;
-            word-wrap: break-word;
-            background: #333;  /* Dark grey background */
-            color: #fff;  /* White text color */
-        }
-        .code-snippet code .comment {
-            color: #008000;  /* Green color for comments */
-        }
         .content {
             width: 100%;
             text-align: center; /* Added this to center all text within the content div */
-        }
-        .article-image {
-            width: 25%;
-            height: auto;
-            display: block;
-            margin: 20px auto;
         }
     </style>
 </head>
@@ -105,10 +76,11 @@
     <div class="top-banner">
         <img src="assets/straylight.jpg" alt="Banner Image">
         <div>
-            <h1>All Posts</h1>
+            <h1>Straylight Security</h1>
+            <h2>Dev. Sec. Oops.</h2>
         </div>
     </div>
-    <div class="navbar">
+    <div class="navbar" style="background-color: #867b7b;">
         <a href="index.html">Home</a>
         <a href="about.html">About</a>
         <a href="red.html">Red</a>
@@ -117,22 +89,22 @@
         <a href="code.html">Code</a>
         <a href="posts.html">Posts</a>
     </div>
+
+    <div class="content">
+        <!-- <img class="thumbnail" src="assets/currentlogo_straylight_darkfox2.png" alt="Thumbnail Image"> -->
+        <p class="center-block">
+         ---   
+            
+        <p></p>
+
+    <div class="social-box">
+        <img class="thumbnail" src="assets/currentlogo_straylight_darkfox2.png" alt="Thumbnail Image">
         <p class="center-block">            
         </p>
         <!-- <h3>Posts</h3> -->
-        <h4>---</h4>
-        <img class="thumbnail" src="assets/cors/8020rule.png" alt="Thumbnail Image">
-        <p><a href="corsandcapture2.html">CORS and Capture Part 2: Proxy Wars</a></p>
-        <p></p>
-        <h4>---</h4>
+        <h4>6/18/2023</h4>
         <img class="thumbnail" src="assets/corsandcapture1-final.png" alt="Thumbnail Image">
         <p><a href="corsandcapture1.html">CORS and Capture Part 1: Self-Hosting a CORS proxy for Device Code Phishing</a></p>
-    <p></p>
-
-    <!-- <div class="social-box">
-        <h3>Red</h3>
-        <h4>Offensive Security Articles</h4>
-        <img class="thumbnail" src="assets/corsandcapture1-final.png" alt="Thumbnail Image">
-        <p><a href="corsandcapture1.html">CORS and Capture Part 1: Self-Hosting a CORS proxy for Device Code Phishing</a></p>
-    </div> -->
-    </body>
+    </div>
+</body>
+</html>
