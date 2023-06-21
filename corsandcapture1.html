@@ -132,7 +132,7 @@
                 <h2>The Goal</h2>
                 I decided to focus on device codes as a reliable means of initial access and spent a lot of time working out ways to make it more flexible. Generated device codes only live for 15 minutes and it became clear fairly quickly that this limitation was worth stopping what I was doing and taking the time to get a better solution in place. 
                 If we can get an access token for the MS Graph, we can use that token to create a Primary Refresh Token for that user. Access tokens are short lived but are refreshed by…you guessed it. With a PRT in hand, we can then refresh our token to each service in O365 that we want to interact with, i.e. Teams, EXO, Sharepoint and loot whatever want. 
-                This makes automation a breeze and there's a loot script here you can use. Access may be short lived in an environment with sharp analysts or good automation, so the goal is to get a long-lasting PRT and as much org recon and user data as possible. 
+                This makes scripting out post-exploitation tasks a breeze and there's some code here later you can use. Access may be short lived in an environment with sharp analysts or good automation, so the goal is to get a long-lasting PRT and as much org recon and user data as possible. 
                 If you're wondering what all these tokens we're talking about are, you can check out <a href="https://learn.microsoft.com/en-us/azure/active-directory/devices/concept-primary-refresh-token">this PRT Documentation</a>, which should get you up to speed.
             </p>
         </div>
@@ -161,7 +161,10 @@
         </p>
 
         <p class="center-block">
-            My flow had been to set up three copies of my template, populate the target emails, start a script to trigger a device code and send it to all three targets at the same time. If a user entered the code the script would loot the users email and run all the azure recon I was interested in MelloSec/PhirstPhish (github.com). 
+            My flow had been to set up three copies of my template, populate the target emails, start a script to trigger a device code and send it to all three targets at the same time. If a user entered the code the script would loot the users email and run all the azure recon I was interested in. 
+            <p></p>
+            <a href="https://github.com/mellosec/phirstphish">PhirstPhish.ps1</a>
+            <p></p>
             What I gained in time back was worth the risk of more than one user taking that bait (which never occurred) but this workflow still relies on time of day and people being at their computer, not doing much and and motivated to check it out immediately. 
             <img class="article-image" src="assets/cors/template2.png" alt="Bluebeam Template">
         </p>
