@@ -269,32 +269,6 @@
                     <p></p>
                 </code>
             </div>
-
-            <div class="text-box">
-                    <span class="comment"># Update the list of packages</span>
-
-                    sudo apt-get update
-                    
-                    <span class="comment"># Install pre-requisite packages.</span>
-
-                    sudo apt-get install -y wget apt-transport-https software-properties-common azure-cli aws unzip
-                    
-                    <span class="comment"># Download the Microsoft repository GPG keys</span>
-
-                    wget -q "https://packages.microsoft.com/config/ubuntu/$(lsb_release -rs)/packages-microsoft-prod.deb"
-                    
-                    <span class="comment"># Register the Microsoft repository GPG keys</span>
-                    
-                    sudo dpkg -i packages-microsoft-prod.deb
-                    
-                    <span class="comment"># Update the list of packages after we added packages.microsoft.com</span>
-                    
-                    sudo apt-get update
-                    
-                    <span class="comment"># Install PowerShell</span>
-                    
-                    sudo apt-get install -y powershell
-                </div>
         <p></p>
         We need an SSH key at ~/.ssh/id_rsa, it will use whatever is there during deployment. This script will create the resources needed in azure, the resource group, VM, networking, etc. 
         <p></p>
@@ -320,21 +294,26 @@
         <p></p>     
         Now kick off our script and sit back.
         <div class="text-box"></div>
-        <p></p>
-
-                <span class="comment"># Sign in to Azure</span>
-                pwsh
-
-                az login
-
-                <span class="comment"># dot-source the script</span>
-                
-                .  .\capture-server\capture-deploy.ps1
-                
-                <span class="comment"># Call the function to deploy with your values</span>
-
-                Invoke-DeployCaptureServer -ResourceGroup CappaDonna -location eastus -vmName cappadonna -vmPublicDNSName cappadonna -pubKey ~/.ssh/id_rsa.pub                
+        <p></p>           
     </p>
+
+    <p></p>
+    <div class="codebox">
+        <code>   
+            <span class="comment"># Sign in to Azure</span>
+            pwsh
+            <p></p>
+            az login
+            <p></p>
+            <span class="comment"># dot-source the script</span>
+            <p></p>
+            .  .\capture-server\capture-deploy.ps1
+            <p></p>
+            <span class="comment"># Call the function to deploy with your values</span>
+            <p></p>
+            Invoke-DeployCaptureServer -ResourceGroup CappaDonna -location eastus -vmName cappadonna -vmPublicDNSName cappadonna -pubKey ~/.ssh/id_rsa.pub     
+        </code>
+    </div>
     <p></p>
     <img class="article-image" src="assets/cors/powershell6.png" alt="Powershell Deploy">
     <p></p>
@@ -384,7 +363,6 @@
 
         <p></p>
         <div class="text-box">
-        < class="center-block">
             <h2>IoCs and Watermarks</h2>
             It's important to be mindful of what our tools look like to anyone paying attention. Scanners are always scanning under the watchful eye of ATP and other security products. Palo Alto for example:
             <p></p>
@@ -486,7 +464,7 @@
             If you need help check out this article with some terraform and powershell scripts in the repo provided to get up to speed quickly.
             <p></p>
             <img class="article-image" src="assets/cors/automated1.png" alt="DKIMPossbile">
-            <a href="https://blog.straylightsecurity.com/2023/06/04/dkimpossible-get-your-time-back/">DKIMPossible: Onboarding Custom Domains, DNS and mail records for O365 tenants (and a tool to help) – Straylight Security</a>
+            <a href="https://github.com/mellosec/dkimpossible">DKIMPossible: Onboarding Custom Domains, DNS and mail records for O365 tenants</a>
             <p></p>
             We're going to take what I showed you above and apply it here to send phishing emails from our own account with powershell. This snippet here is also a good demonstration of how you would acquire a token with TokenTactics and use it with AADInternals in general: 
             <p></p>
