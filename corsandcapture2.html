@@ -132,8 +132,8 @@
         <p class="center-block">
             <h2>The 80/20 Rule</h2>
             My friend once told me that projects follow an 80/20 rule. 80% of your most important effort will go into the lat 20% of the project. 
-            That 20% of the time accounts for 80% of the value of your project. I feel like I'm butchering the hell out of that but sounds right. 
-            The first 80 percent of the project is fun and productive and morale is high.  Not that there won't be difficulties and stress or problems and redesigns, but the last 20% of a project is where it really sucks and where you learn the most. You're so over the project, you lose your shit at every git error and you're lost on troubleshooting. I think that was this past week and we're now close to the end. The last bit of suck.
+            That 20% of the time accounts for 80% of the value of your project. I feel like I'm butchering the hell out of that but we're going to roll with it, feels right enough. 
+            The first 80 percent of the project is fun and productive and morale is high.  Not that there won't be difficulties and stress or problems and redesigns, but the last 20% of a project is where it really sucks and where you learn the most. You're so over the project, you lose your shit at every git error and you're lost on troubleshooting. I think that was this past week and we're now close to the end. The last bit of the suck.
         </p>
     </div>
     <p></p>
@@ -142,7 +142,7 @@
         <p class="center-block">
             <h2> Where We're At</h2>
             <p></p>
-            This is Part 2 of a series and you might be lost if you didn't read Part 1. Last time, we started working on way to keep our device codes alive for phishing. 
+            This is Part 2 of a series and you might be lost if you didn't read <a href="corsandcapture1.html">Part 1</a>. Last time, we started working on way to keep our device codes alive for phishing. 
             We got a working version of the lure, but ran into the problem of sending it with the Outlook client.  We had an EC2 serving CORS solely for url redirection from a good domain. 
             The domain had been working for email but hosting a site got blocked by web-filtering by categorization. We need to get our lure hosted on a better domain. 
             <!-- <img class="article-image" src="assets/cors/categorycheck1.png" alt="cors and capture 2"> -->
@@ -226,10 +226,11 @@
                     domain="lemonwaterguide"
                     <p></p>
                     sudo certbot certonly --register-unsafely-without-email -d www.$domain.com  --standalone --preferred-challenges http --non-interactive --agree-tos   
-                    <p></p>
-                    <img class="article-image" src="assets/cors/letsencrypt1.png" alt="cors and capture 2">                
+                    <p></p>                                    
                 </code>
             </div>
+            <p></p>
+            <img class="article-image" src="assets/cors/letsencrypt1.png" alt="cors and capture 2">
             <p></p>
             You'll find them in /etc/letsencrypt/live/www.$domain.com
                     <p></p>
@@ -246,32 +247,182 @@
                             ls ~/certs               
                         </code>
                     </div>
-                    <p></p>
-
-
+            <p></p>
+            Updog has it's own SSL cert it uses when you use the '--ssl' option. I'd like to use ours but it's worth trying it out. 
+            If we need to,  Nginx and another server written in Go called Gosh  let you use custom certs. 
+            It also looks like Updog is just a flask application, a framework we're fairly comfortable with.
+            <p></p>
+            <img class="article-image" src="assets/cors/updog3.jpg.png" alt="cors and capture 2">
+            <img class="article-image" src="assets/cors/updog4.png" alt="cors and capture 2">
+            Note the similarities to the Capture server. Looks like we have a starting point if we feel the need to modify Updog, as well. In the morning our next objective is to test our new domain against the web-filter and the lure via Updog with SSL. 
+            If that works, we'll register a certificate for the capture server and I'll show you how to deploy it. Once we have a fully encrypted setup that works for everything, we'll do one final teardown, resize the servers for cost then deploy again and finish the automation in the process. 
         </p>
     </div>
 
-    <!-- <p></p>
+
+ <p></p>
     <div class="text-box">
         <p class="center-block">
-            <h2>Placeholder</h2>
+            <h2>Whiskey in the Jar</h2>
             <p></p>
-            <img class="article-image" src="assets/background.png" alt="cors and capture 2">
+            Updog turned into more hassle than I had hoped for, and I recorded none of that. 
+            It occurred to me later that using CORS and Updog behind caddy as a reverse proxy would've been a better use of time. 
+            Trying that first, but I was just moving, and it may have turned into a rabbit hole we didn't need. I'm glad I did it, I learned a ton and will put some of what I made to use elsewhere. 
+            I decided to take it's source code and strip it down to do the two tasks we need: serve static content and using our own SSL certficates. We'll add strict paths to it after we prototype.
+            <img class="article-image" src="assets/cors/flask1.png" alt="cors and capture 2">
             <p></p>
+            It's called supdog, for "simplistic updog" but at this point it's barely an app much less a clone of updog but I learned it from that project and I like stupid names.  
+            All you have to do is copy your "cert.pem" and "privkey.pem" to the supdog folder. 
+            Place static content in the same foldcer in "static" "content" and the filename.
+            <img class="article-image" src="assets/cors/flask2.png" alt="cors and capture 2">
+            <p></p>
+            Perfect. That's our dynamic lure serving over SSL using our LetsEncrypt certificate. 
         </p>
-    </div>  -->
-
-    <!-- <p></p>
+    </div>  
+<p></p> 
+<!-- Content -->
+<p></p>
     <div class="text-box">
         <p class="center-block">
-            <h2>Placeholder</h2>
+            <h2>Live Test 2</h2>
+            Set an A record for our server, and went to deploy again…but I could not get the page to work, even on a local server.
+            I ended up creating a control file in the servers static folder using the flux-hosted CORS Anywhere:
             <p></p>
-            <img class="article-image" src="assets/background.png" alt="cors and capture 2">
+            <img class="article-image" src="assets/cors/lureserver1.png" alt="cors and capture 2">
+            <p></p>
+            You can use this to troubleshoot with the Chrome dev tools (F12)
+            <p></p>
+            <img class="article-image" src="assets/cors/lureserver2.png" alt="cors and capture 2">
+            <p></p>
+            Let's go update our small Flask server for this file:
+            <p></p>
+            <img class="article-image" src="assets/cors/flask3.png" alt="cors and capture 2">
+            <p></p>
+            Back in our "lure-server.js" inside "\lure-server\cors-anywhere\" we need to make some changes
+            <p></p>
+            Let's remove our headers, we can add them back if we need to later
+            <p></p>
+            <p></p>
+            <img class="article-image" src="assets/cors/lureserver3.png" alt="cors and capture 2">
+            <p></p>
+            Test it live against a domain we want to redirect to.
+            <p></p>
+            Place <a href="https://cnn.com">CNN.com</a> at the end of your servers URL <a href="https://lure.trusteddomain.com/https://cnn.com">https://lure.trusteddomain.com/https://cnn.com</a>
+            <img class="article-image" src="assets/cors/lureserver4.png" alt="cors and capture 2">
+            <p></p>
+            Needed to do some troubleshooting using the Console in developer tools:
+            <p></p>
+            <img class="article-image" src="assets/cors/mixed1.png" alt="cors and capture 2">
+            <p></p>
+            I think the reason it displays on the live server in VS Code but not here is that mixed content policy. 
+            I guess now we need to get SSL working. I tried before, when working out the earlier parts of this and was unsuccessful. 
+            It started turning into a time sink and I decided to pull out and work on another part of the project. 
+            Now it's unavoidable and we don't really have an excuse anyway, except the time this all has taken. 
+        <p></p>
+        </p>
+    </div>
+<p></p>
+<!-- Content -->
+<p></p>
+    <div class="text-box">
+        <p class="center-block">
+            <h2>Two Paths</h2>
+            <p></p>
+            We need an SSL proxy for this Cors-Anywhere. I think we need to look at the example we first saw in the Issues of the Cors-Anywhere repo. Someone was discussing this there when I was researching how to self host this thing. It didn't work out iof the box and I didn't have what it took to troubleshoot that. If I don't have it now I'm about to get it.
+            <p></p>
+            The reason this was working before is because I was hosting the second cors service on Capture server.
+            Having our resources on a separate domain prevented the mixed content error. If I was in a rush to use it, that would be my next goal, re-deploy that and edit the javascript for the hosted lure.
+            Let's call that plan C, for cop-out, and leave it with our patient parts. Let's see if we can get this running over SSL.
+            <p></p>
+            We need to edit the lure-server.js first (again) to run on port 8443. We're going to run Caddy a really cool reverse-proxy that will let us proxy traffic between our cors service and the world. We won't need the custom "straylight" headers and can run multiple services like flask and our node cors server like a backend on the same port.  
+            <p></p>
+            <img class="article-image" src="assets/cors/lureserver5.png" alt="cors and capture 2">
+            <p></p>
+            This works. It's a basic config. It adds the required headers we need. We could easily tell it here to add our custom headers if we want to.  I'll put in the "caddy" folder in the repo and call it "CORS-Caddyfile"
+            <img class="article-image" src="assets/cors/caddy1.png" alt="cors and capture 2">
+            <p></p>
+            We have the proxy running on port 443 with our letencrypt certificate and the CORS service is being proxied successfully.
+            <p></p>
+            To be continued...
+        </p>
+    </div>
+<!-- Content -->
+<p></p>
+    <div class="text-box">
+        <div class="center-block">
+            <h2>Automate, Automate Such a Simple Plan</h2>
+            <h3>-Diversion-</h3>
+            <p></p>
+            I automate as I go, try to keep track of the shell commands that works and work with it all afterward. It comes with some experience to write it as you go but if you can start that habit early it will help you.
+            Takes me a long time to learn things now, but I learn them deeper because I start automating early in my process. Gives you something to work on when you get stuck, too.
+            <p></p>
+            This looks awful, I'm still bad at CSS and code boxes are tricky. Copy this to your IDE:
+            <p></p>
+            <div class="codebox">
+                <code>   
+                    <span class="comment"># Capture Server TMUX Script</span>
+                    <span class="comment"># Starts high-port CORS and Capture server in tmux sessions</span>
+                    <p></p>
+                    #!/bin/bash
+                    <p></p>
+                    delete_sessions=false
+                    <p></p>
+                    <span class="comment"># Parse command-line options</span>
+                    <p></p>
+                    while getopts ":d" option; do
+                      case $option in
+                        d)
+                          delete_sessions=true
+                          ;;
+                        \?)
+                          echo "Invalid option: -$OPTARG" >&2
+                          exit 1
+                          ;;
+                      esac
+                    done
+                    <p></p>
+                    <span class="comment"># Create or delete sessions based on the option</span>
+                    <p></p>
+                    if [ "$delete_sessions" = true ]; then
+                      tmux kill-session -t cors 2>/dev/null
+                      tmux kill-session -t capture 2>/dev/null
+                    else
+                    <p></p>
+                    <span class="comment"># Create detached session "cors" and send commands</span> 
+                    <p></p>  
+                    tmux new-session -d -s cors
+                      tmux send-keys -t cors "cd /home/azureuser/yourcorsanywhere/capture-server/cors-anywhere" Enter
+                      tmux send-keys -t cors "npm install"
+                      tmux send-keys -t cors "node cap-server.js" Enter
+                      <p></p>
+                      <span class="comment"># Create detached session "capture" and send commands</span>
+                      <p></p> 
+                      tmux new-session -d -s capture
+                      tmux send-keys -t capture "cd /home/azureuser/yourcorsanywhere/capture-server" Enter
+                      tmux send-keys -t capture "mkdir certs" Enter
+                      tmux send-keys -t capture "cd certs" Enter
+                      tmux send-keys -t capture "cp /home/azureuser/certs/* ." Enter
+                      tmux send-keys -t capture "cd .. && sudo python3 capturetoken.py" Enter
+                    fi
+                    <p></p>
+                </code>
+            </div>
+            <p></p>
+            Make it look like this, the indentation is important. My suggestion is throw it right into chatGPT and say "Big Dawg, format this, it's a bash script".
+            <p></p>
+            It only works if you call it big dawg, though. Should fix the loop.
+            <p></p>
+            <img class="article-image" src="assets/cors/tmux1.png" alt="cors and capture 2">
             <p></p>
         </p>
-    </div>  -->
+    </div>
 
+
+
+
+
+
+    <p></p>
     <!-- Placeholder -->
     <div class="text-box">
         <p class="center-block">
@@ -283,9 +434,7 @@
         </p>
     </div>
 
-
-
-
+<!-- <--- resources ---> 
 <p></p>
 <div class="text-box">        
     <p class="center-block">
