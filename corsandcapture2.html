@@ -104,6 +104,9 @@
     color: black; /* Set the font color to black */
     /* You can add additional styles here if needed */
 }
+.codebox code .comment {
+    color: #008000;  /* Green color for comments */
+}
     </style>
 </head>
 <!--  Start of Body -->
@@ -346,12 +349,180 @@
             To be continued...
         </p>
     </div>
-<!-- Content -->
 <p></p>
+<!-- Content  -->
+<p></p>
+    <div class="text-box">
+        <p class="center-block">
+            <h2>Updog Revisited</h2>
+            <p></p>
+            What we're going to try today is what I should have tried earlier this week, placing updog behind the same proxy as CORS. I was having trouble with the proxy itself more than anything at that point. Looking back over everything, we had updog working, but the domain was bad. In our haste, we moved towards a seemingly "better" solution that looked easy to implement.
+            It looked easy, but web development is not a strong skill of mine, it's one I'm trying to improve. What this means for me is if I think the solution to my problem lies in a direction I'm "okay" at, double the effort and triple the amount of time you think it will take to make it work. 
+            <p></p>
+            That's definitely what happened here, I went at a new solution without knowing what complexity it was going to add, and my fundamentals were not strong enough in web to carry me through gracefully. For example, If this was a powershell or dotnet project we'd be closer to, if not already, done. I know how to troubleshoot those issues, here I had to learn, and the time it added was significant. Once again, the knowledge we gained was beyond worth it. If I had a team of operators waiting for it it would've been a nightmare, and we may have ended up with something hackier. We have the time, so we use the time. 
+            <p></p>
+            Okay, let's move this over to the lure server and try it with updog using "CONTENT-Caddyfile"
+            <p></p>
+            <img class="article-image" src="assets/cors/contentcaddyfile1.png" alt="cors and capture 2">
+            <p></p>
+            I took the CORS Caddyfile and made a version that should serve updog. We will have to tell it to add the ?view param later, I want to see it work in a simpler form first. 
+            Another lesson learned here is that I can't judge how much complexity a seemingly small thing can add yet.
+            <p></p> 
+            That will come with more experience but It doesn't have to display, if everything looks right with curl we will add that later. 
+            It's easier to add another block from a stable foundation. I feel like I spend a lot of time performing surgery like a ship in a bottle trying to troubleshoot back through things I've added.
+            <p></p>
+            <img class="article-image" src="assets/cors/shipbottle1.png" alt="cors and capture 2">
+            <p></p>
+            Ensure caddy is running, start your backend cors service on 8443 in tmux session, start updog on 5000 using ssl in its own tmux session. 
+            You background a tmux session with "Ctrl+b" then tap "d".  Tmux is like the vim of shells, capable of wizardy in good hands, a fumbly fucking mess in others. 
+            It's starting to feel more natural now, for tmux at least.
+            <p></p>
+            <!-- Codebox -->
+            <p></p>
+            <div class="codebox">
+                <code>
+                    sudo systemctl status caddy
+                    <p></p>
+                     tmux new-session -t cors
+                    <p></p>
+                     node yourcorsanywhere/lure-server/cors-anywhere/lure-server.js
+                    <p></p>   
+                    <span class="comment"># Ctrl+b +d to background tmux</span>
+                    <p></p>
+                    tmux new-session -t updog 
+                    <p></p>                    
+                    cd ~/yourcorsanywhere/dynamic-lures/
+                    <p></p>
+                    updog -p 5000 --ssl                                  
+                    <p></p>
+                    <span class="comment"># Ctrl+b +d to background tmux</span>                                    
+                </code>
+            </div>
+            <p></p>
+            <p></p>
+            Not a moment after shit-talking vim, I need it for something and it mangles my copy paste:
+            <p></p>
+            <img class="article-image" src="assets/cors/vim1.png" alt="cors and capture 2">
+            <figcaption><i>We angered the gods. The Awk-Sed-Grep gods.</i></figcaption>
+        </p>
+    </div>
+<p></p>
+<!--  COntent -->
+<p></p>
+    <div class="text-box">
+        <p class="center-block">
+            <h2>Development Hell</h2>
+            Tried testing and it wouldn't work now. We had this working this morning, the same config is in place, we disabled the service, tried to load various config files manually and still got error, and rebooted because that's what you do when you're stuck. Now…
+            <p></p>
+            <img class="article-image" src="assets/cors/caddy2.png" alt="cors and capture 2">
+            <p></p>
+            We lost some time to troubleshooting this. What it was? Permission on the certificate was wrong. 
+            Caddy needed permissions. These error messages aren't very helpful. ChatGPT really helps you parse these logs and make sense of things. 
+            <p></p>
+            <img class="article-image" src="assets/cors/chatgpt2.png" alt="cors and capture 2">
+            <p></p>
+            It can help you figure out what to google, sometimes it can answer you directly if the problem is simple or seen often enough.
+            <p></p>
+            <img class="article-image" src="assets/cors/caddy3.png" alt="cors and capture 2">
+            <figcaption><i>Changed the permissions  and caddy started up, let's test the CORS proxy.</i></figcaption>
+            <p></p>
+            <!-- Codebox -->
+            <div class="codebox">
+                <code>
+            sudo chown caddy:caddy /home/ansible/certs/privkey.pem
+            </code>
+            </div>
+            <!-- end codebox -->
+            <p></p>
+            <img class="article-image" src="assets/cors/haackernews1.png" alt="cors and capture 2">
+            <figcaption><i>We can redirect to Hacker News</i></figcaption>
+            <p></p>
+            Let's copy the working config Caddyfile to working.Caddyfile and rename Caddyfile2 to Caddyfile. We'll put that config in the originals place and restart the service.
+            <p></p>
+            <!-- Codebox  -->
+            <div class="codebox">
+                <code>
+                    sudo mv /etc/caddy/Caddyfile /etc/caddy/working.Caddyfile && sudo cp ~/yourcorsanywhere/caddy/Caddyfile /etc/caddy/Caddyfile
+                    <p></p>
+                    sudo systemctl restart caddy
+                    <p></p>
+                    sudo systemctl status caddy
+            </code>
+            </div>
+            <!--  End codebox -->
+            <p></p>
+            <p></p>
+            We got a 502 bad gateway error. The gateway is between Caddy and Flask. I wonder if it's with the weird updog cert.
+            <p></p>
+            <img class="article-image" src="assets/cors/502.png" alt="cors and capture 2">
+            <p></p>
+            Let's troubleshoot from the updog side first.
+            <p></p>
+            <img class="article-image" src="assets/cors/updog5.png" alt="cors and capture 2">            
+            <p></p>
+            Forgive the dumb disposable folder name, I like dumb names. Looks like requests are getting from Caddy to Updog. 
+            First set was with SSL and the second was attempting ssl after turned off.  An http request didn't work either. Minor change to Caddyfile to ignore SSL errors on 5000 
+            <p></p>
+            <img class="article-image" src="assets/cors/caddy4.png" alt="cors and capture 2">
+            <p></p>
+            I moved the "test.html" up a level so theres one in both folders and tried again...
+            <p></p>
+            and…             
+            <p></p>
+            <img class="article-image" src="assets/cors/success.png" alt="cors and capture 2">
+            <figcaption><i>Holy shit!</i></figcaption>
+            <p></p>
+            Let's add that '?view" parameter.
+            <img class="article-image" src="assets/cors/view1.png" alt="cors and capture 2">
+            <p></p>
+            <img class="article-image" src="assets/cors/finally1.png" alt="cors and capture 2">
+            <p></p>
+            That's game! Over https, proxying CORS, serving our dynamic lure with no weird certificate errors like this we got earlier when we tried:
+            <p></p>
+            <img class="article-image" src="assets/cors/updog6.png" alt="cors and capture 2">
+            <figcaption><i>Warning from using Updog</i></figcaption>
+            <p></p>
+            The adhoc SSL certificate updog uses is not trusted, it's self-signed and because Updog is only used for development and testing that doesn't matter.
+             It matters to us, as we need this to look like a quality site. What we essentially are doing is laid out here:
+             <img class="article-image" src="assets/cors/diagram1.png" alt="cors and capture 2">
+             <p></p>
+            Now we can put our lure together using this and finish the automation. I'm going to include an AWS deploy script, the sorrowset project I use to configure the lure server, capture server, create tmux sessions…basically load your lure and turn the key.
+            <p></p>
+            I'm tired though. Check back for Part 3 where I show you how to turn this whole thing into an infrastructure-as-code solution you can just use. You'll have options and literally everything you need to learn how to make cool cloud stuff your self.
+            <p></p>
+            <p></p>
+
+            <p></p>
+
+            <p></p>
+
+            <p></p>
+
+            <p></p>
+        </p>
+    </div>
+<p></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Extra Content -->
+<!-- <p></p>
     <div class="text-box">
         <div class="center-block">
             <h2>Automate, Automate Such a Simple Plan</h2>
-            <h3>-Diversion-</h3>
+            <h3>--Diversions--</h3>
             <p></p>
             I automate as I go, try to keep track of the shell commands that works and work with it all afterward. It comes with some experience to write it as you go but if you can start that habit early it will help you.
             Takes me a long time to learn things now, but I learn them deeper because I start automating early in my process. Gives you something to work on when you get stuck, too.
@@ -415,7 +586,7 @@
             <img class="article-image" src="assets/cors/tmux1.png" alt="cors and capture 2">
             <p></p>
         </p>
-    </div>
+    </div> -->
 
 
 

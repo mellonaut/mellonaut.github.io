@@ -101,6 +101,9 @@ p.center-block {
 .code-snippet code .comment {
     color: #008000;  /* Green color for comments */
 }
+.codebox code .comment {
+    color: #008000;  /* Green color for comments */
+}
 
 .content {
     width: 100%;
