@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sleeping Giants: What I've Learned Trying to Phish</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #333;  /* Dark grey background */
+            color: #fff;  /* White text color */
+        }
+        p.center-block {
+            width: 75%;  /* or any width */
+            margin: auto;
+            text-align: center;
+            /* border: 1px solid black;  Optional, to visualize the block */
+            padding: 10px;  /* Optional, to add some space around the text */
+        }
+        .top-banner {
+            text-align: center;
+            position: relative;
+            height: 33.33vh; /* This sets the height of the banner to be 1/3 of the viewport height. */
+        }
+        .top-banner img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* This property causes the image to be scaled and cropped to fill the banner. */
+        }
+        .top-banner div {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            transform: translateY(-50%);
+            text-align: center;
+            color: #fff;
+        }
+        .navbar {
+            background-color: #867b7b;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        .navbar a {
+            float: left;
+            display: block;
+            color: #f2f2f2;
+            border: 1px solid rgb(83, 83, 83);
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+        .navbar a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+        .code-snippet {
+            width: 66%;
+            margin: auto;
+            /* border: 1px solid black; */
+            padding: 10px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            background: #333;  /* Dark grey background */
+            color: #fff;  /* White text color */
+        }
+        .code-snippet code .comment {
+            color: #008000;  /* Green color for comments */
+        }
+        .content {
+            width: 100%;
+            text-align: center; /* Added this to center all text within the content div */
+        }
+        .article-image {
+            width: 25%;
+            height: auto;
+            display: block;
+            margin: 20px auto;
+        }
+        .text-box {
+            width: 80%; /* Adjust width as needed */
+            margin: 0 auto; /* Centers the box */
+            padding: 20px;
+            background-color: #f3f1f1;; /* Light grey background color */
+            color: #000; /* Black text color */
+            text-align: center; /* Aligns text to center */
+            border-radius: 10px; /* Optional, to make the box corners rounded */
+        }
+        .codebox {
+    /* Below are styles for the codebox (not the code itself) */
+    border: 1px solid black;
+    background-color: #EEEEFF;
+    width: 300px;
+    overflow: auto;
+    padding: 10px;
+    margin: 0 auto; /* Add this line to center the codebox */
+}
+
+.codebox code {
+    /* Styles in here affect the text of the codebox */
+    font-size: 1.2em;
+    color: black; /* Set the font color to black */
+    /* You can add additional styles here if needed */
+}
+.codebox code .comment {
+    color: #008000;  /* Green color for comments */
+}
+    </style>
+</head>
+<!--  Start of Body -->
+<!-- Navbar -->
+<body>
+    <div class="top-banner">
+        <img src="assets/straylight.jpg" alt="Banner Image">
+        <div>
+            <h1>Sleeping Giants: What I've Learned Trying to Phish</h1>
+        </div>
+    </div>
+    <div class="navbar">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="red.html">Red</a>
+        <a href="blue.html">Blue</a>
+        <a href="cloud.html">Cloud</a>
+        <a href="code.html">Code</a>
+        <a href="posts.html">Posts</a>
+    </div>
+<!-- Content Starts Here -->
+<!-- Content Starts Here -->
+<div class="content">
+    <img class="article-image" src="assets/sleepinggiants.png" alt="Article Image">        
+    <div class="text-box">
+        <p class="center-block">
+            <h2>The Hardest Part</h2>
+            One skill I've wanted to improve is social engineering, and with my first upcoming phishing engagement I set out to put the right toolkit together and make myself some documentation to follow so that my focus could be  more on the interpersonal aspects and less on powershell. I knew this would be a complicated process and gave myself plenty of time to experiment, but even with a month or two of lead-up it's been tough and there have been some insights gained that I think may benefit others. I tried to automate the sticky bits and put something flexible together with recovery in mind. The same infrastructure can be deployed for as many domains as you have and want and if something gets burned (and it did) you have options. In some ways, this will serve to save you some time sifting through articles from a year or two that no longer work, too. 
+            As the arms race continues, some of the techniques and tools don't work as well as they once did. I'll try and highlight these things along the way.
+        </p>
+    </div>
+    <p></p>
+
+    <div class="text-box">
+        <p class="center-block">
+            <h2>Domains</h2>
+            One skill I've wanted to improve is social engineering, and with my first upcoming phishing engagement I set out to put the right toolkit together and make myself some documentation to follow so that my focus could be  more on the interpersonal aspects and less on powershell. 
+            I knew this would be a complicated process and gave myself plenty of time to experiment, but even with a month or two of lead-up it's been tough and there have been some insights gained that I think may benefit others. 
+            I tried to automate the sticky bits and put something flexible together with recovery in mind. The same infrastructure can be deployed for as many domains as you have and want and if something gets burned (and it did) you have options. 
+            In some ways, this will serve to save you some time sifting through articles from a year or two that no longer work, too. 
+            I found the most success with expireddomains.net and selecting sites with a decent reputation, some backlinks, etc. It will be probably tough to find a perfect typosquat domain like your targets but if you're going to  be engaging in social engineering you can find something to work with your pre-text.
+             I chose a few companies with good scores that would feasibly do work and interact with my client. This allowed me to reach out with business inquiries and talk shop on linkedin. Pick something you can back up with a little knowledge; if you have no experience in a legal setting don't overreach with a legal profession pre-text when you could instead be a potential client who would be expected to sound lost and ask questions.
+             Namecheap is cheaper than GoDaddy but GoDaddy seems to be a little easier to work with as far as Terraform. Some domains you want are only listed as GoDaddy or Namecheap. It is worth throwing the domain into that providers site and see if they offer it. I've found the same domains on namecheap for about 4 dollars less at times.
+             <p></p>
+             <img class="article-image" src="assets/sleeping/sleeping1.png" alt="sleepinggiants">
+             <figcaption><i>What makes a good domain?</i></figcaption>
+             <p></p>
+            
+             
+        </p>
+    </div>
+    <p></p>
+
+    <div class="text-box">
+        <p class="center-block">
+            <h2>Mail Sending Service</h2>
+            <p></p>
+            O365 likes to trust O365, with my Microsoft background and current tenant an Office subscription seemed like the best move. 
+            I have seen Mailgun listed as a good service that's highly recommended. It costs money now, so I opted for using my dev tenant to see what could be done with O365.
+            Dev tenants are free and supply you with a ton of licenses as long as you use it to make stuff every now and then. 
+            This in combination with free credits from Pay-as-You-Go and first year of services you can get a good lab together cheap.
+            <p></p>
+            <a href="https://developer.microsoft.com/en-us/microsoft-365/dev-program">Free Dev tenant with licenses</a>
+            <p></p>
+            You can get an O365 dev tenant for free with a number of licenses and pre-populated users. I highly, highly recommend getting one, espeically if you've any interest in Azure. 
+            It will allow you to work with AAD/Conditional Access, Defender for Endpoint licenses for an EDR lab, etc. Seriously, it's free and they wont close it down as long as you work on some projects and use it regularly. You'll also need a regular Azure tenant to deploy the App Service components later on in this post.
+            It's a very Azure-centric blog but I try to keep it free as much as I can. 
+            With one of these tenants and a Pay-as-You-Go subscription with free serrvices for a year you can play with just about everything I talk about on this site.
+            <p></p>
+        </p>
+    </div>
+    <p></p>
+    <div class="text-box">
+        <p class="center-block">
+            <h2>Mail Reputation</h2>
+            <p></p>
+            Your next quest is adding a custom domain to your Azure AD tenant, adding DNS records at your provider for sending mail, enrollment services and setup DKIM keys.
+            I made a powershell/terraform project to help you with this. There are a couple of manual steps but it's a huge time saver:
+            <p></p>
+            <a href="https://github.com/mellosec/dkimpossible">DKIMPossible</a>
+            <p></p>
+            <a href="dkimpossible.html">Tool writeup</a>
+            <p></p>
+            When you get your domain setup, create yourself a user in Azure Active Directory and assign it the required licensing for email. For the dev tenant there's a basket license that contains everything you have available, if you're using your own subscription you may need to start an Office 365 trial or assign a license.
+            <p></p>
+            <p></p>
+            Create a test email with barely anything. Make it seem normal. I like to do a "Hey Mark,  let me know if you get this please. We're working with a new email provider and haven't worked out all the kinks yet. Wish us luck!" something like that. Even before AI was reading everything Outlook would look for "spammy" text and make value determinations on your email. By doing this it seems like a normal testing situation rather than what it is. It may not make much of a difference but in the advent of Large Language Models I consider it good opsec to think you're always being evaluated by something like that.
+            <p></p>
+            Go to <a href="mail-tester.com">mail-tester.com</a> and see what we're working with
+            <p></p>
+            <img class="article-image" src="assets/sleeping/sleeping2.png" alt="sleepinggiants">
+            <figcaption><i>Mail Score</i></figcaption>
+            <p></p>
+            <p></p>
+            Fire it off to the address the site gives you and it will give you a score based on a number of factors. It will explain what the problem is:
+            <p></p>
+            <img class="article-image" src="assets/sleeping/sleeping2a.png" alt="sleepinggiants">
+        </p>
+    </div>
+    <p></p>
+    <!-- Content  -->
+    <p></p>
+    <div class="text-box">
+        <p class="center-block">
+            <h2>Pictures, Links and Lures</h2>
+            <p></p>
+            Don't send pictures in the email, the Exchange gods don't like it. Don't send clickable links, and be mindful of the reputation of the link you are sending.
+             I remove the hyperlink from the url, it will still be clickable. The browser compensates, I think, but I'm not sure. I've noticed recently that it seems to not like .azurewebsites.net domains as much as it did before. You can use custom domains on App Service and I've found that to be helpful if you have a good domain from earlier. 
+            I'll host a redirector on a custom domain app service that redirects to another app service or wherever I need it. Azure-App-Tools by rvrsh3ll... 
+            <p></p><a href="'https://github.com/rvrsh3ll/Azure-App-Tools">Azure App Tools</a>
+            <p></p>
+            ...has Python-Flask-Redirector that looks useful here. It can be modifed to redirect to the endpoints we need a couple different ways.
+            <img class="article-image" src="assets/sleeping/sleeping3.png" alt="Sleeping Giants">
+            <p></p>
+            I like creating simple html/css emails and landing pages that link to pictures rather than include them. I'll try to find a photo on the vendor's site or host something I made to add to the con.
+            <p></p>
+            <img class="article-image" src="assets/sleeping/sleeping4.png" alt="Sleeping Giants">
+            <p></p>
+            Not my bucket, and using wikipedia. Better than nothing but if you can find something official it will make your lure look more legit and prevent a distinct IoC like this. That said, it works.
+            <p></p>
+            <img class="article-image" src="assets/sleeping/sleeping5.png" alt="Sleeping Giants">
+            <p></p>
+            Save it as an outlook template file and save yourself some trouble. I'm sure there are better ways with something like GoPhish but I wanted to try and figure it all out manually first. If you save the template you can open a few, paste some addresses, and trigger a device code to send.
+            <p></p>
+            To be continued... 
+        </p>
+    </div>
+    <p></p>
+
+
+
+
+
+
+<!-- 
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+
+
+
+    <p></p>
+    <img class="article-image" src="assets/cors/updog6.png" alt="sleepinggiants">
+    <figcaption><i>Warning from using Updog</i></figcaption>
+    <p></p>
+
+
+    <p></p>
+    <div class="text-box">
+        <p class="center-block">
+            <h2>Placeholder</h2>
+            <p></p>
+            <img class="article-image" src="assets/background.png" alt="Sleeping Giants">
+            <p></p>
+        </p>
+    </div>
+    <p></p> -->
+
+
+
+<p></p>
+<div class="text-box">        
+    <p class="center-block">
+    <h2>Resources</h2>
+    <a href="https://learn.microsoft.com/en-us/azure/active-directory/develop/v2-oauth2-device-code">Device Code Flow overview from Identity Platform docs</a>
+    <p></p>    
+    <p></p>
+    <a href="https://www.synacktiv.com/en/publications/azure-ad-introduction-for-red-teamers">Azure primer for Red Teamers to get you up to speed:</a>
+    <p></p>
+    <p></p>
+    <a href="https://www.trustedsec.com/blog/hacking-your-cloud-tokens-edition-2-0/">    Good Token Abuse Writeup by TrustedSec:</a>
+    <p></p>
+        </p>
+</div>
+
+<!-- End of Body -->
+</body>
+</html>
