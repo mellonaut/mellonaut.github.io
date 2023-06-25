@@ -89,6 +89,22 @@
             display: block;
             margin: 20px auto;
         }
+        .codebox {
+            /* Below are styles for the codebox (not the code itself) */
+            border: 1px solid black;
+            background-color: #EEEEFF;
+            width: 300px;
+            overflow: auto;
+            padding: 10px;
+            margin: 0 auto; /* Add this line to center the codebox */
+        }
+
+        .codebox code {
+            /* Styles in here affect the text of the codebox */
+            font-size: 1.2em;
+            color: black; /* Set the font color to black */
+            /* You can add additional styles here if needed */
+        }
     </style>
 </head>
 <body>
@@ -114,10 +130,25 @@
         <p></p>
     </p>
 
+    <p></p>
+    <div class="text-box">
+        <div class="center-block">
+    <div class="codebox">
+        <code>
+            <p></p>   
+            A development blog, both personal and technical.
+            <p></p>
+            She ugly.
+        </code>
+    </div>
+    </div>
+    <p></p>
+
+
     <div class="social-box">
         <h3>Github</h3>
         <p><a href="https://github.com/mellosec">Mellosec - "Portfolio" projects for public consumption</a></p>
-        <p><a href="https://github.com/mellonaut">Mellonaut - Personal pet projects and Forks </a></p>
+        <p><a href="https://github.com/mellonaut">Mellonaut - Forgotten Forks and Fixer-Uppers </a></p>
         <h3>Certifications:</h3>
         <p><a href="https://training.zeropointsecurity.co.uk/courses/red-team-ops">(In progress) CRTO - Certified Red Team Operator</a></p>
         <p><a href="https://learn.microsoft.com/en-us/certifications/exams/sc-200/">MS SC-200 - Microsoft Security Operations Analyst</a></p>
