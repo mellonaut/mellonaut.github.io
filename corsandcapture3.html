@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CORS and Capture Part 3: Automate, Automate</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #333;  /* Dark grey background */
+            color: #fff;  /* White text color */
+        }
+        p.center-block {
+            width: 75%;  /* or any width */
+            margin: auto;
+            text-align: center;
+            /* border: 1px solid black;  Optional, to visualize the block */
+            padding: 10px;  /* Optional, to add some space around the text */
+        }
+        .top-banner {
+            text-align: center;
+            position: relative;
+            height: 33.33vh; /* This sets the height of the banner to be 1/3 of the viewport height. */
+        }
+        .top-banner img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* This property causes the image to be scaled and cropped to fill the banner. */
+        }
+        .top-banner div {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            transform: translateY(-50%);
+            text-align: center;
+            color: #fff;
+        }
+        .navbar {
+            background-color: #867b7b;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        .navbar a {
+            float: left;
+            display: block;
+            color: #f2f2f2;
+            border: 1px solid rgb(83, 83, 83);
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+        .navbar a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+        .code-snippet {
+            width: 66%;
+            margin: auto;
+            /* border: 1px solid black; */
+            padding: 10px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            background: #333;  /* Dark grey background */
+            color: #fff;  /* White text color */
+        }
+        .code-snippet code .comment {
+            color: #008000;  /* Green color for comments */
+        }
+        .content {
+            width: 100%;
+            text-align: center; /* Added this to center all text within the content div */
+        }
+        .article-image {
+            width: 40%;
+            height: auto;
+            display: block;
+            margin: 20px auto;
+        }
+        .article-image-wide {
+            width: 75%;
+            height: auto;
+            display: block;
+            margin: 20px auto;
+        }
+        .article-image-narrow {
+            width: 25%;
+            height: auto;
+            display: block;
+            margin: 20px auto;
+        }
+        .text-box {
+            width: 80%; /* Adjust width as needed */
+            margin: 0 auto; /* Centers the box */
+            padding: 20px;
+            background-color: #f3f1f1;; /* Light grey background color */
+            color: #000; /* Black text color */
+            text-align: center; /* Aligns text to center */
+            border-radius: 10px; /* Optional, to make the box corners rounded */
+        }
+        .codebox {
+    /* Below are styles for the codebox (not the code itself) */
+    border: 1px solid black;
+    background-color: #EEEEFF;
+    width: 300px;
+    overflow: auto;
+    padding: 10px;
+    margin: 0 auto; /* Add this line to center the codebox */
+}
+
+.codebox code {
+    /* Styles in here affect the text of the codebox */
+    font-size: 1.2em;
+    color: black; /* Set the font color to black */
+    /* You can add additional styles here if needed */
+}
+.codebox code .comment {
+    color: #008000;  /* Green color for comments */
+}
+    </style>
+</head>
+<!--  Start of Body -->
+<!-- Navbar -->
+<body>
+    <div class="top-banner">
+        <img src="assets/straylight.jpg" alt="Banner Image">
+        <div>
+            <h1>CORS and Capture Part 3: Automate, Automate, Such a Simple Plan</h1>
+        </div>
+    </div>
+    <div class="navbar">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="red.html">Red</a>
+        <a href="blue.html">Blue</a>
+        <a href="cloud.html">Cloud</a>
+        <a href="code.html">Code</a>
+        <a href="posts.html">Posts</a>
+    </div>
+<!-- Content Starts Here -->
+<!-- Content Starts Here -->
+<div class="content">
+    <img class="article-image" src="assets/cors/automateautomate.png" alt="Article Image">        
+    <div class="text-box">
+        <p class="center-block">
+            <h2>Putting it All Together</h2>
+            Welcome back to part 3 of this series where we developed a solution for serving a dynamic device code page and retrieving the token from the endpoint. 
+            This let's us get arounds the 15 minute time-to-live that was bothering me so much. The first two Parts <a href"">Part 1</a> and <a href"">Part 2</a> saw us develop our proof-of-concept and get through the hurdles to having it run. 
+            We touched briefly on the deployment of these servers and the scripts and I apologize for that, it's hard to decide when to go into what as we covered a bunch of topics on this project. 
+            This article will go itno more detail on that and demonstrate deployment through the full attack chain for this setup, how to use it, etc..
+        <p></p>
+        </p>
+    </div>
+    <p></p>
+<!--  Content -->
+    <div class="text-box">
+        <p class="center-block">
+            <h2>Infrastructure-as-Code</h2>
+            <p></p>
+            Infrastrucutre-as-Code, or IaC, is writing repeatable deployable infrastructure as sets of scripts or configuration files. 
+            The cloud age has ushered in a sea of powerful APIs into every providers heart and it's allowed engineers and admins to approach infrastructure in a different way. 
+            There are many ways to do it but my preferred ways are a combination of powershell, terraform, ansible and various providers individual CLIs. Azure is a good example, 
+            I'll use small powershell wrappers to automate terraform tasks and use ansible to do post-configuration. It was my introduction to coding and has saved me a HUGE amount of spend on cloud resources. 
+            Having terraform/ansible combo configurations for most of my needs has been great. I can store the data in the cloud and spin up whatever I need and attach. 
+            If I'm going to spend more than an hour troubleshooting something I'll often detach the public IP and volume, blow it away and attach them to the new one.
+             You keep your code in github and have version control, as well as a means to continuously deploy  through Actions or Azure Devops (I'll show you it's awesome). 
+            This project contains examples in the forms of powershell scripts for azure and aws that are easy for you to modify and make your own plus an eample of a terraform+ansible project you can use as well.
+            <p></p>
+            <!-- <img class="article-image" src="assets/background.png" alt="Cors and Capture 3"> -->
+            <p></p>
+        </p>
+    </div>
+    <p></p>
+    <!--  Content -->
+    <p></p>
+    <div class="text-box">
+        <p class="center-block">
+            <h2>Deployment</h2>
+            <p></p>
+            Let's diagram and deploy our capture server, then our lure server, then we'll demonstrate. 
+            This won't be an in depth powershell tutorial, I'm going to show you where you can make some edits and some gotchas that may pop up. 
+            <p></p>
+            <img class="article-image-wide" src="assets/cors/solutiondiagram1.png" alt="Cors and Capture 3">
+            <p></p>
+            <p></p>
+            Here's where we ended up.
+            <p></p>
+            We started with CORS on both servers as we developed the concept, but reducing that to just the lure server behind a reverse-proxy was the best solution. 
+            We reduced the size of the capture server to save costs and have the lure-server providing extra utility as an Open-Redirect for disguising urls. 
+            If you're wondering why we don't capture the tokens behind Caddy: I don't want a single point of failure and decoupling phishing from capturing is worth it. 
+            The capture server uses Azure's IP reputation and backs the LetsEncrypt cert to retrieve our tokens and our good categorized domain goes on AWS to host the lure. 
+            Let's try the capture server first, since that's working already. We just need to make some edits for our custom stuff.
+            <p></p>
+        </p>
+    </div>
+    <p></p>
+        <!--  Content -->
+        <p></p>
+        <div class="text-box">
+            <p class="center-block">
+                <h2>Capture Server</h2>
+                <p></p>
+                We touched on this briefly in the first couple of articles, it's an Azure VM that captures the tokens, deployed using powershell and Az Run-Command to configure it.
+                <p></p>
+                <img class="article-image" src="assets/cors/capture1.png" alt="Cors and Capture 3">
+                <p></p>
+                <img class="article-image" src="assets/cors/capture2.png" alt="Cors and Capture 3">
+                <p></p>
+                <p></p>
+                We still clone TokenTactics and TokenTacticsV2 like we did but we've added our cors repo and pointed the sections about the capture server to our version located in "yourcorsanywhere/capture-server/capturetoken.py. 
+                It will create it's own LetsEncrypt certificate and we copy that now to our repo since we're serving with those certificates. I included ".pem" in the .gitignore to be safe, but don't make any commits from this server. 
+                Consider it a one way repo, clone it, make your changes for the operation and use it temporarily. Don't push secrets, you get really big  bills and none of the mined crypto. Trust me..
+                <p></p>
+                We then use tmux to create the session for the capture server. My friend showing me Tmux was a true gift, it's made my life so much easier. 
+                You can log into your server and create a persistent session for each thing you want to run. 
+                If your shell dies, it will still run until shutdown or closed, but it's not as bulky as running it as a true service.
+                For what we do it's perfect and the fact that it's scriptable is really cool. I've never tried it in an azure deployment so let's we what we get. 
+                <p></p>
+                <p></p>
+                <img class="article-image" src="assets/cors/capture3.png" alt="Cors and Capture 3">
+                <p></p>
+                <p></p>
+                Deployed, but without tmux. Let's delete the entire resource group to clear out the resources, look for typos and re-deploy.
+                <p></p>
+                <img class="article-image" src="assets/cors/capture4.png" alt="Cors and Capture 3">
+                <p></p>
+                And Redeploy:
+                <p></p>
+                <img class="article-image" src="assets/cors/capture5.png" alt="Cors and Capture 3">
+                <p></p>
+                <img class="article-image" src="assets/cors/capture6.png" alt="Cors and Capture 3">
+                <p></p>
+                <p></p>
+                I love Az Run-Command, I wish AWS had an equivalent. If you can shell script or know powershell it makes deploying VMs and post-config a breeze.
+                <p></p>
+                AADInternals wouldn't import
+                <p></p>
+                <img class="article-image" src="assets/cors/capture7.png" alt="Cors and Capture 3">
+                <p></p>
+                It says succeeded, because it ran the command, not because the command itself was successful. You have to look through them a bit to find things. Comment out that section for now, we'll run those manually on the host after it deploys and fix them back here
+                <p></p>
+                <img class="article-image" src="assets/cors/capture8.png" alt="Cors and Capture 3">
+                <p></p>
+                There were some quotes, typos and variable issues I fixed, I just wanted to show you the basics of troubleshooting so you can modify and use this.
+                <p></p>
+                <img class="article-image" src="assets/cors/capture9.png" alt="Cors and Capture 3">
+                <p></p>
+                This one drove me a little crazy. You have to start powershell and install in the same command so it's in the same powershell session, if you try "pwsh" as one command and the "Install-Module" as two commands, i.e. like I tried "pwsh; Install-Module"
+                 It wants the commands one by one.
+                "pwsh && Install-Module" wouldn't either, it can't transfer from bash to powershell like that, but I feel like someone like my friend Dave could make that work. He goes deep on bash and linux internals where I just love and use it. Sometimes we both have a project that's with some weird OS internal so I get to share my stuff about windows apis and learn about how the linux kernel works with packets. You need to pass the "-c" argument to tell it we want to start powershell and specify a command for powershell to run.
+                <p></p>
+                <img class="article-image" src="assets/cors/capture10.png" alt="Cors and Capture 3">
+                We got it working, we logged into the server and verify tmux session is active, but not serving flask.
+                <p></p>
+                To troubleshoot, let's try and run the command 
+                <p></p>                
+                <img class="article-image" src="assets/cors/capture11.png" alt="Cors and Capture 3">
+                <p></p>
+                We had python instead of Python3. Gets me all the time. Helps to be specific. We still ended up having trouble with sending the tmux command through run command. I'm okay with needing to start the capture session manually, I'll auto-shutdown/redeploy everyday anyway, but I'll put some time in trying to figure this out later on.
+                <p></p>        
+                <p></p>
+            </p>
+        </div>
+        <p></p>
+        <!-- Content -->
+        <p></p>
+            <div class="text-box">
+                <p class="center-block">
+                    <h2>Lure Server</h2>
+                    This was pretty straight forward, AWS makes it easy to deploy, as well, though, you can't just run commands on a VM. You have to supply a shell script in the form of user data:
+                    <p></p>                    
+                    <p></p>                
+                    <img class="article-image" src="assets/cors/lure1.png" alt="Cors and Capture 3">
+                    <p></p>
+                    <p></p>
+                    Pass your access keys on the command line, it's very not secure, buyt secrets management is up to you, that's beyond the scope of these articles.
+                    That will be a future article, though. We create a new SSH Keypair for this and write it to our SSH folder.
+                    <p></p>                    
+                    ProfileName and, Tags, UserDataScript are all yours to change. That AMI is the Id used by AWS for the ubuntu image in us-east-1.
+                    Parameters passed to the aws cli as a hash table. Change "t2.nano" to "t2.micro" if you find this machine needs more juice. 
+                    I'm trying to save as much money as we can, but I noticed when we had everything running during development the lure-server was starting tp feel it.
+                    That's the beauty of I-a-C, though, just blow it up and re-deploy.
+                    <p></p>                
+                    <img class="article-image" src="assets/cors/lure2.png" alt="Cors and Capture 3">
+                    <p></p>
+                    Security Group Rules
+                    <p></p>
+                    We get the instance by using our Tags, the Name LuridArray, and retrieve it's security group. We then open our we bports to the world, then get our public IP and store it in a varialbe to create the SSH rule for your current IP. This way your SSH isnt exposed to the world. We'll add this to the Azure VM deploy, too. 
+                    <p></p>
+                    <img class="article-image" src="assets/cors/lure3.png" alt="Cors and Capture 3">
+                    <p></p>
+                    Worked like a charm. The deploy script is the next step, make sure it's doing what it should. 
+                    We're going off the default AWS username here and you have to set your domain for the certbot portion to get your SSL cert.
+                    Caddy has automatic letsencrypt enrollment, I think that may be a good thing to try. We know certbot works but with some manual intervention on our part. I wonder how caddy does it's thing.
+                    <p></p>
+                    <img class="article-image" src="assets/cors/lure4.png" alt="Cors and Capture 3">
+                    <p></p>                    <p></p>
+                    <img class="article-image" src="assets/cors/lure5.png" alt="Cors and Capture 3">
+                    <p></p>
+                    <p></p>
+                    Very cool. Right now, we're providing the domain but overriding this activation feature using our own certificates, which we specified in the Caddyfile:
+                    <p></p>                    
+                    <img class="article-image" src="assets/cors/lure6.png" alt="Cors and Capture 3">
+                    <p></p>
+                    <p></p>
+                    We also developed this on a blowaway machine I manage with ansible, so our username is going to need to change. We could standardize the username between both projects or do like "capture" and "lure" instead of platform specific. 
+                    <p></p>
+                    It's a little much for this article, but the way I see doing CORS and Capture in the future is a single Terraform configuration file with both servers and respective DNS providers. We would add the DNS record at the VMs creation.
+                    This would work like the azure capture server, we could use caddy to enroll based on the AWS DNS information. I want to use our custom domain certificate, though. We still end up in a situation where we need the IP address to make the record beofre we can continue with the script.
+                    It's not a big deal, it can he handled similar to this:
+                    <p></p>
+                    That's not good enough for me, though. Regardless, setting the record and letting Caddy handle it's own certificates is probably the way to go, rather than us scripting out the copying of the certs like we did here and for capture. 
+                    <p></p>
+                    Just occurred to me that we probably don't need to use "sudo" to copy those certs, and therefore probably don't have to "chown" those for the regular user either.
+                    So our way could be better, and Caddy's way looks really simple.  We could try including a caddyfile with the domain in the deploy script, or repository. 
+                    <p></p>
+                    There are ways we can do this using specific providers and plugins for caddy but, we have to compromise with  a manual step. After "lure-setup.sh" runs in the deploy phase, we'll have our public IP and can set up our record. With record in place, we'll run a script manually to setup caddy. Remove caddy from "lure-setup.sh" and create a Caddyfile and new script "Caddy-setup.sh" in "lure-server"
+                    <p></p>                    
+                    <img class="article-image" src="assets/cors/lure7.png" alt="Cors and Capture 3">
+                    <p></p>                    
+                    <img class="article-image" src="assets/cors/lure8.png" alt="Cors and Capture 3">
+                                                                                                                                                               
+                </p>
+            </div>
+        <p></p>
+
+  
+
+
+<!-- Resources  -->
+
+
+<!-- Content
+<p></p>
+    <div class="text-box">
+        <p class="center-block">
+            <h2>Placeholder</h2>
+            <p></p>
+            <img class="article-image" src="assets/background.png" alt="Bluebeam Template">
+            <p></p>
+        </p>
+    </div>
+<p></p>
+
+ -->
+
+
+
+
+
+<p></p>
+<div class="text-box">        
+    <p class="center-block">
+    <h2>Resources</h2>
+    <a href="https://learn.microsoft.com/en-us/azure/active-directory/develop/v2-oauth2-device-code">Device Code Flow overview from Identity Platform docs</a>
+    <p></p>    
+    <p></p>
+    <a href="https://www.synacktiv.com/en/publications/azure-ad-introduction-for-red-teamers">Azure primer for Red Teamers to get you up to speed:</a>
+    <p></p>
+    <p></p>
+    <a href="https://www.trustedsec.com/blog/hacking-your-cloud-tokens-edition-2-0/">    Good Token Abuse Writeup by TrustedSec:</a>
+    <p></p>
+        </p>
+</div>
+
+<!-- End of Body -->
+</body>
+</html>
