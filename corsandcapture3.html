@@ -249,7 +249,7 @@
                 <p></p>
                 This one drove me a little crazy. You have to start powershell and install in the same command so it's in the same powershell session, if you try "pwsh" as one command and the "Install-Module" as two commands, i.e. like I tried "pwsh; Install-Module"
                  It wants the commands one by one.
-                "pwsh && Install-Module" wouldn't either, it can't transfer from bash to powershell like that, but I feel like someone like my friend Dave could make that work. He goes deep on bash and linux internals where I just love and use it. Sometimes we both have a project that's with some weird OS internal so I get to share my stuff about windows apis and learn about how the linux kernel works with packets. You need to pass the "-c" argument to tell it we want to start powershell and specify a command for powershell to run.
+                "pwsh && Install-Module" wouldn't either, it can't transfer from bash to powershell like that, but I feel like someone like my friend could make that work. He goes in on bash and linux internals where I just mostly love and use it. Sometimes we both have a project that's with some weird OS internal so I get to share my weird stuff about the windows api and learn about how the linux kernel works. You need to pass the "-c" argument to tell it we want to start powershell and specify a command for powershell to run.
                 <p></p>
                 <img class="article-image" src="assets/cors/capture10.png" alt="Cors and Capture 3">
                 We got it working, we logged into the server and verify tmux session is active, but not serving flask.
