@@ -321,14 +321,106 @@
                     <img class="article-image" src="assets/cors/lure7.png" alt="Cors and Capture 3">
                     <p></p>                    
                     <img class="article-image" src="assets/cors/lure8.png" alt="Cors and Capture 3">
-                    <p></p>
-                    Check back friday... monday!                                                                                                                                                                
+                                                                                                                                                                                 
                 </p>
             </div>
         <p></p>
-
-  
-
+<!-- Content -->
+<p></p>
+    <div class="text-box">
+        <p class="center-block">
+            <h2>Live Test 3</h2>
+            <p></p>
+            <img class="article-image" src="assets/cors/lure10.png" alt="Cors 3">
+            <p></p>
+            <img class="article-image" src="assets/cors/lure11.png" alt="Cors 3">
+            <p></p>
+            Access to XMLHttpRequest at 'https://login.microsoftonline.com/common/oauth2/deviceauth?code=FNFXM529T' from origin 'https://test.straylightsecurity.com' has been blocked by CORS policy: Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+            <p></p>
+            I thought we had that set on the server. Let's take a look, maybe we have stripped them out and didn't notice.
+            <p></p>
+             Everything looks fine...
+            <p></p>
+            Let's test it against the control.html, which is the original snippet, and validated-test.html the one that was working and gave us the token in Part 1. 
+            <p></p>
+            <img class="article-image" src="assets/cors/lure12.png" alt="Cors 3">
+            <p></p>
+            That is the same damn error, and on both. I really, truly, hope Microsoft didn't patch this between part 1 and part 3. Some troubleshooting on both sides has me concerned that may be the case.
+            <p></p>
+            We could try to deploy standard cors-anywhere again and remove the Caddy, see if we can make this work. Thoughts are we could maybe have Caddy add the header but I'm really not sure. This just sort of sucks.
+            <p></p>
+            <img class="article-image" src="assets/cors/lure13.png" alt="Cors 3">
+            <p></p>
+            CORS is working here, that's a response using our cors server to request the token from the endpoint. Let's see what happens if we add the headers via the proxy.
+            <p></p>
+            Nope.
+            <p></p>
+            <img class="article-image" src="assets/cors/lure14.png" alt="Cors 3">
+            <p></p>
+            Me, google and chatGPT have reached our limit. It's a pre-flight error, I'm 99% sure it's microsoft responding to user/me saying this site can't login for you.
+            I wonder what it was like before, I wish I had logs from last week.
+            I kept every working version of this thing, even running the version I had that captured the tokens for the image in the first article no longer works.
+            Microsoft may have restricted their CORS policy on that endpoint. There is another endpoint and a couple things to try but we may be right were we were last month with 15 minutes time to live for each code.
+            <p></p>
+            Well…we have another server on azure, we can try the setup over there. Maybe our server got blocked, or domain, or maybe Microsoft is less restrictive with requests originating from and going to it's own cloud.
+            If that doesn't work, we're going to have to adapt, I have the new campaign together now and will have to start sending emails, waiting till we get a reply THEN sending the code while they're sitting there. 
+            I really need to understand this error before we do anything else.             
+            </p>
+        </div>
+        <p></p>
+<!-- Content -->
+            <p></p>
+                <div class="text-box">
+                    <p class="center-block">
+                        <h2>Into the Labyrinth</h2>
+                        <p></p>
+                        Time to start looking at documentation or blog posts. I'll usually look for blog posts first, they often contain deeper break downs in the article about the topics we're looking at. I started by googling the error message.
+                        I found some blogs that deal with similar CORs issues, and provided me the deep dive I'd really been looking for. It's called stackhawk by an Application Security guy and it's really good stuff:
+                        <p></p>
+                        This excerpt from his blog got me thinking about revisitng trying to add the headers.
+                        <a href="https://www.stackhawk.com/blog/what-is-cors/">Stackhack: What is CORS?</a>
+                        <p></p>
+                        <!-- <a href="https://www.stackhawk.com/blog/what-is-cors/">Stackhack: What is CORS?</a> -->
+                        <img class="article-image" src="assets/cors/lure15.png" alt="Cors 3">
+                        <p></p>
+                        We tried doing exactly that, so maybe we should look at it again.
+                         This seems like what was working with the device code endpoint:
+                         <img class="article-image" src="assets/cors/lure16.png" alt="Cors 3">
+                        <p></p>                        
+                        <img class="article-image" src="assets/cors/lure23.png" alt="Cors 3">
+                        <p></p>
+                        I wish I was a little less of a a noob here when it comes to modern web apps. This is turning into my summer of web. We followed Stackhawk to another article referencing the exact error message we were getting.
+                        <p></p>
+                        Fixing "No 'Access-Control-Allow-Origin' Header Present" (stackhawk.com)
+                        <p></p>
+                        <img class="article-image" src="assets/cors/lure17.png" alt="Cors 3">
+                        <p></p>
+                        <p></p>
+                        That pre-flight request is generating the XMLHttpRequest error. The browser is not seeing a header it's expecting to see. Can we trick it? Does the value of that header really matter-matter or does it just check that something's there?
+                        They're using NGINX like we're using caddy, they're adding and handling the headers for requests and responses. We should modify their nginx config for Caddy and see what we get.
+                        <p></p>                                                
+                        <img class="article-image" src="assets/cors/lure18.png" alt="Cors 3">
+                        <p></p>
+                        <img class="article-image" src="assets/cors/lure19.png" alt="Cors 3">
+                        <p></p>
+                        In nginx speak, add_header is the same as Caddy's reverse_proxy directive "header_up" and proxy_set_header is our "header_down".
+                        We spent some time trying different headers being passed down both sides. The header needs to be present on the login resource. It's not anymore. 
+                        <p></p>                        
+                        <img class="article-image" src="assets/cors/lure20.png" alt="Cors 3">
+                        <p></p>
+                        <img class="article-image" src="assets/cors/lure21.png" alt="Cors 3">
+                        <p></p>
+                        Strict origin is enforced. We even went into our CORS server under cors-anwhere\lib\cors-anywhere.js and changed the code to match our domain here:                        
+                        <p></p>
+                        All day, different things, to no avail. We have to give up on this, at least for a while. Maybe we'll look around and see if anyone else has come across this or ask in the Bloodhound slack channel.
+                        <p></p>
+                        Guess that's…just kind of it. It's still useful as a high reputation redirector for links (i.e. https:/goodlink.com/https://sketchyaf.net) and used for other things, as well. Learned a ton. If we ever fix it I'll do a Part 4 for this. 
+                        Microsoft may have just patched that vulnerability, though. Guess we're sending codes the old fashioned way and see about setting up one of the session stealing proxies.                        
+                        <p></p>
+                    </p>
+                </div>
+            <p></p>
+        
 
 <!-- Resources  -->
 
@@ -355,13 +447,13 @@
 <div class="text-box">        
     <p class="center-block">
     <h2>Resources</h2>
-    <a href="https://learn.microsoft.com/en-us/azure/active-directory/develop/v2-oauth2-device-code">Device Code Flow overview from Identity Platform docs</a>
+    <a href="https://www.stackhawk.com/blog/fixing-no-access-control-allow-origin-header-present/">Stackhawk has great CORS articles</a>
     <p></p>    
     <p></p>
-    <a href="https://www.synacktiv.com/en/publications/azure-ad-introduction-for-red-teamers">Azure primer for Red Teamers to get you up to speed:</a>
+    <a href="https://learn.microsoft.com/en-us/azure/active-directory/develop/v2-oauth2-device-code">Device Code Documentation</a>
     <p></p>
     <p></p>
-    <a href="https://www.trustedsec.com/blog/hacking-your-cloud-tokens-edition-2-0/">    Good Token Abuse Writeup by TrustedSec:</a>
+    <a href="https://learn.microsoft.com/en-us/javascript/api/overview/azure/identity-readme?view=azure-node-latest">    Azure Javascript Clients Docs</a>
     <p></p>
         </p>
 </div>
