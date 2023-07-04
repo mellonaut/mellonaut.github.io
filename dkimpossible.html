@@ -142,32 +142,11 @@
     <div class="text-box">
         <p class="center-block">
             <!-- <h2>DKIMPossible</h2> -->
-            <h4>Onboarding Custom Domains, DNS and Mail Records for O365 tenants</h4>
-            On my first phishing engagement/attempt it was up to me to figure it all out. 
-            I couldn't land anywhere and I almost got my home IP banned by Spamhaus. 
-            I ended up buying an expired domain through expireddomains.net with good rating and a lot of backlinks. 
-            I grabbed some Office licenses and started the tedious process of setting up records. 
-            I wanted to help out with that ( and never ever have to do it again ) and it seemed like a perfect project for terraform.
-            I ended up writing a powershell helper script to handle the changes in O365 and terraform updates the DNS in either GoDaddy, Namecheap or DigitalOcean.
-            I will add AWS and Azure at some point.
-            I say, I say. 
-    <p></p>
-            Through amazing blogs by Steve Borosh's 'Spoofing Microsoft 365 Like It's 1995', 
-            Bobby Cook's 'The Art of the Device Code Phish', 
-            and 'Long Live DMARC - Email Spoof issues' by Intruder at redteamcafe, 
-            I set up all the SPF and DKIM records which got my mail rating to a 9.5 on https://mail-tester.com. 
-            I emailed my contact at the organization and verified it's delivery. 
-            It was tedious and boring. 
-            I started thinking of ways to automate it and this what I came up with. Let's look at what we're up against:
+            <p></p><h2>Onboarding Custom Domains, DNS and Mail Records for O365 tenants</h2>On my first phishing engagement/attempt it was up to me to figure it all out2 I couldn't land anywhere and I almost got my home IP banned by Spamhaus2 I ended up buying an expired domain through expireddomains.net with good rating and a lot of backlinks2 I grabbed some Office licenses and started the tedious process of setting up records2 I wanted to help out with that ( and never ever have to do it again ) and it seemed like a perfect project for terrafor2.I ended up writing a powershell helper script to handle the changes in O365 and terraform updates the DNS in either GoDaddy, Namecheap or DigitalOcea2.I will add AWS and Azure at some poin2.I say, I say. <p></p>Through amazing blogs by Steve Borosh's 'Spoofing Microsoft 365 Like It's 1995', Bobby Cook's 'The Art of the Device Code Phish', and 'Long Live DMARC - Email Spoof issues' by Intruder at redteamcafe, I set up all the SPF and DKIM records which got my mail rating to a 9.5 on https://mail-tester.com. I emailed my contact at the organization and verified it's delivery. It was tedious and boring. I started thinking of ways to automate it and this what I came up with. Let's look at what we're up against:<p></p>
             <p></p>
             <img class="article-image" src="assets/dkimpossible/dkimpossible2.png" alt="dkimpossible">
             <figcaption><i>Exchange Online Protection flow from Steve's article</i></figcaption>
-            <p></p>
-            <img class="article-image" src="assets/dkimpossible/dkimpossible3.png" alt="dkimpossible">
-            <figcaption><i>Intruder's breakdown of SPF and DKIM</i></figcaption>
-            <p></p>
-            Here's the project structure, we're going to use Terraform and Powershell
-            <p></p>
+            <p></p><img class="article-image" src="assets/dkimpossible/dkimpossible3.png" alt="dkimpossible"><figcaption><i>Intruder's breakdown of SPF and DKIM</i></figcaption><p></p>Here's the project structure, we're going to use Terraform and Powershell<p></p>
             <img class="article-image" src="assets/dkimpossible/dkimpossible4.png" alt="dkimpossible">
         </p>
     </div>
@@ -176,13 +155,7 @@
     <div class="text-box">
         <p class="center-block">
             <!-- <h2>DKIMPossible</h2> -->
-            <h4>Helper Script</h4>
-            Each template has a helper script  AzNameCheap.ps1, AzGoDaddy.ps1, AzDigitalOcean.ps1 that takes a domain as a parameter. This is run in the same folder as the terraform project, it will run terraform for you. 
-            It will install and import the modules you need, get your admin creds for the tenant and create the domain.
-             Then it runs a plan and waits for you to confirm before applying the changes. 
-             Once changes are made and the records are live, the DKIM Signing is enabled. 
-             Go into the portal and check to make sure the custom domain is verified in Azure AD under 'custom domains' and in O365. Then check https://security.microsoft.com/dkim and verify them there as well.
-             May as well check your providers dashboard as well to verify everything got where it was supposed to. Terraform is pretty good about minding it's own shop but best practice is good practice. 
+            </p><h4>Helper Script</h4><p></p>Each template has a helper script  AzNameCheap.ps1, AzGoDaddy.ps1, AzDigitalOcean.ps1 that takes a domain as a parameter. This is run in the same folder as the terraform project, it will run terraform for you. <p></p>It will install and import the modules you need, get your admin creds for the tenant and create the domain.<p></p> Then it runs a plan and waits for you to confirm before applying the changes. <p></p> Once changes are made and the records are live, the DKIM Signing is enabled. <p></p> Go into the portal and check to make sure the custom domain is verified in Azure AD under 'custom domains' and in O365. Then check https://security.microsoft.com/dkim and verify them there as well.<p></p> May as well check your providers dashboard as well to verify everything got where it was supposed to. Terraform is pretty good about minding it's own shop but best practice is good practice. 
             <img class="article-image" src="assets/dkimpossible/dkimpossible5.png" alt="dkimpossible">
             <figcaption><i>Powershell to deploy Terraform</i></figcaption>
             <p></p>
@@ -193,13 +166,7 @@
     <div class="text-box">
         <p class="center-block">
             <!-- <h2>DKIMPossible</h2> -->
-            <h4>Providers.tf</h4>
-            Here's our providers file, this is where you tell terraform what provider you want to use. 
-            Terraform supports a bunch of non-cloud APIs as well, for example I've used it to spin up VMs on Proxmox.
-             You can find third party providers or use hashicorp's which give you the documentation with examples. 
-             There are better ways to do this where you don't enter your actual API keys in the project files using Vault. 
-             We should learn that next. Those variables won't work, those are just for me to you so you know what goes where. 
-            These values come from your DNS providers dashboard where you'll create your API keys. 
+            <h4>Providers.tf</h4><p></p>Here's our providers file, this is where you tell terraform what provider you want to use. Terraform supports a bunch of non-cloud APIs as well, for example I've used it to spin up VMs on Proxmox. You can find third party providers or use hashicorp's which give you the documentation with examples.  There are better ways to do this where you don't enter your actual API keys in the project files using Vault.  We should learn that next. Those variables won't work, those are just for me to you so you know what goes where. These values come from your DNS providers dashboard where you'll create your API keys. 
             <img class="article-image" src="assets/dkimpossible/dkimpossible6.png" alt="dkimpossible">
             <figcaption><i>Namecheap requires an IP Address and API key</i></figcaption>
             <p></p>
@@ -210,16 +177,7 @@
     <div class="text-box">
         <p class="center-block">
             <!-- <h2>DKIMPossible</h2> -->
-            <h4>Main.tf</h4>
-            Main.tf, the main part of the project, unsurprisingly. We define some variables up top for the domain name and incidentals like GoDaddy's customer Id. 
-            Each provider has their own way of doing things that are slightly different. 
-            Some people put these in their own variables file but I like being able to look at it in the same file since we're not doing anything too complicated.
-             Notice domain has a "-" so "-com" rather than ".com".
-             <p></p>
-             These values come from your tenant. The customer Id is a godaddy thing only and isn't required for everyone, but the tenant suffix / onmirosoft domain and the verification record come from the AzureAD tenant you're phishing from.
-             I added the protection ones as variables as well, even though the structure doesn’t change, this let's me loook back at this later and know what's important. Run the powershell script attached to each template, it will givve you the value you need for "verification_record"
-
-            <p></p>
+            <h4>Main.tf</h4><p></p>Main.tf, the main part of the project, unsurprisingly. We define some variables up top for the domain name and incidentals like GoDaddy's customer Id. Each provider has their own way of doing things that are slightly different. Some people put these in their own variables file but I like being able to look at it in the same file since we're not doing anything too complicated. Notice domain has a "-" so "-com" rather than ".com". <p></p>These values come from your tenant. The customer Id is a godaddy thing only and isn't required for everyone, but the tenant suffix / onmirosoft domain and the verification record come from the AzureAD tenant you're phishing from.I added the protection ones as variables as well, even though the structure doesn’t change, this let's me loook back at this later and know what's important. Run the powershell script attached to each template, it will givve you the value you need for "verification_record"<p></p>
             <img class="article-image" src="assets/dkimpossible/dkimpossible7.png" alt="dkimpossible">
             <figcaption><i>Replace with your values</i></figcaption>
             <p></p>
@@ -230,39 +188,18 @@
     <div class="text-box">
         <p class="center-block">
             <!-- <h2>DKIMPossible</h2> -->
-            <h4>DNS and SPF Records</h4>
-            DNS Records to be created. We have our verification record, the SPF record and the MX protection record.
-            <p></p>
-            Sender Policy Framework (SPF) is an email authentication technique used to prevent email spoofing and spam by validating the origin of an email message. It works by allowing domain owners to specify which mail servers are authorized to send emails on their behalf. This information is published as a DNS record, known as an SPF record. When an email is received, the recipient's mail server checks the sending server's IP address against the authorized servers listed in the domain's SPF record. If the sending server is found in the list, the email is considered legitimate; otherwise, it may be marked as spam or rejected. 
-            <p></p>
-            If you are going to use something like GoPhish you may want to add a SPF record for that public IP, as well, but that's way outside the scope of this post (and something I haven't done yet). 
-            <p></p>
-            <p></p>
+            <h4>DNS and SPF Records</h4>DNS Records to be created. We have our verification record, the SPF record and the MX protection record.<p></p>Sender Policy Framework (SPF) is an email authentication technique used to prevent email spoofing and spam by validating the origin of an email message. It works by allowing domain owners to specify which mail servers are authorized to send emails on their behalf. This information is published as a DNS record, known as an SPF record. When an email is received, the recipient's mail server checks the sending server's IP address against the authorized servers listed in the domain's SPF record. If the sending server is found in the list, the email is considered legitimate; otherwise, it may be marked as spam or rejected. <p></p>If you are going to use something like GoPhish you may want to add a SPF record for that public IP, as well, but that's way outside the scope of this post (and something I haven't done yet). <p></p>
             <img class="article-image" src="assets/dkimpossible/dkimpossible8.png" alt="dkimpossible">
             <figcaption><i>GoDaddy example</i></figcaption>
-            <p></p>
-            DKIM CNAMES  and enterprise endpoints make up the rest of the project. We'll look at each a little closer.
+            <p></p>DKIM CNAMES  and enterprise endpoints make up the rest of the project. We'll look at each a little closer.
             <img class="article-image" src="assets/dkimpossible/dkimpossible9.png" alt="dkimpossible">
             <figcaption><i>DKIM uses CNAME Records</i></figcaption>
-            <p></p>
-            This is where we set up DKIM for the domain. 
-            <p></p>
-            DomainKeys Identified Mail (DKIM) is an email authentication method designed to improve email security and help prevent email spoofing, phishing, and spam. 
-            It enables the sender to cryptographically sign an email message using a private key, which is then verified by the recipient using a public key published in the sender's Domain Name System (DNS) record. 
-            <p></p>
-            By validating the signature, the recipient can confirm that the email has not been tampered with during transit and that it genuinely originates from the claimed domain. 
-            This process helps to establish trust and credibility in email communications, ensuring the integrity of the email ecosystem. We set the records here with the variables from above.
-            <p></p>
+            <p></p>This is where we set up DKIM for the domain. <p></p>DomainKeys Identified Mail (DKIM) is an email authentication method designed to improve email security and help prevent email spoofing, phishing, and spam. It enables the sender to cryptographically sign an email message using a private key, which is then verified by the recipient using a public key published in the sender's Domain Name System (DNS) record. <p></p>By validating the signature, the recipient can confirm that the email has not been tampered with during transit and that it genuinely originates from the claimed domain. This process helps to establish trust and credibility in email communications, ensuring the integrity of the email ecosystem. We set the records here with the variables from above.<p></p>
             <img class="article-image" src="assets/dkimpossible/dkimpossible10.png" alt="dkimpossible">
-            <figcaption><i>DKIM uses CNAME Records</i></figcaption>
-            <p></p>
-            Enterprise enrollment records just to look like every other O365 org:
-           <p></p>
+            <p></p>Enterprise enrollment records just to look like every other O365 org:<p></p>
            <img class="article-image" src="assets/dkimpossible/dkimpossible11.png" alt="dkimpossible">
            <figcaption><i>O365 Enterprise enrollment</i></figcaption>
-           <p></p>
-           Kick it off with the powershell script and enjoy about 3 hours of your time back. If it sucks or it breaks, let me know please.
-           <a href="https://github.com/mellosec/dkimpossible">DKIMPossible</a>
+           <p></p>Kick it off with the powershell script and enjoy about 3 hours of your time back. If it sucks or it breaks, let me know please.<p></p><a href="https://github.com/mellosec/dkimpossible">DKIMPossible</a>
         </p>
     </div>
 
@@ -273,23 +210,7 @@
 <p></p>
 <div class="text-box">        
     <p class="center-block">
-    <h2>Resources</h2>
-    <a href="https://github.com/mellosec/dkimpossible">Terraform/Powershell project in the article</a>
-    <p></p>  
-    <a href="https://www.blackhillsinfosec.com/spoofing-microsoft-365-like-its-1995/"> Spoofing Microsoft 365 Like It's 1995 - Black Hills Information Security (blackhillsinfosec.com)</a>
-    <p></p>    
-    <p></p>
-    <a href="https://0xboku.com/2021/07/12/ArtOfDeviceCodePhish.html">Art of the Device Code Phish</a>
-    <p></p>
-    <p></p>
-    <a href="https://www.redteam.cafe/phishing/long-live-dmarc-email-spoof-issues">Long Live DMARC</a>
-    <p></p>
-    <p></p>
-    <a href="https://mail-tester.com">Check your mail rating</a>
-    <p></p>
-    <a href="https://dirteam.com/bas/2020/08/17/field-notes-dkim-and-missing-selector-records/">For DKIM Woes</a>
-    
-    <p></p>
+    <h2>Resources</h2><a href="https://github.com/mellosec/dkimpossible">Terraform/Powershell project in the article</a><p></p>  <a href="https://www.blackhillsinfosec.com/spoofing-microsoft-365-like-its-1995/"> Spoofing Microsoft 365 Like It's 1995 - Black Hills Information Security (blackhillsinfosec.com)</a><p></p>    <p></p><a href="https://0xboku.com/2021/07/12/ArtOfDeviceCodePhish.html">Art of the Device Code Phish</a><p></p><p></p><a href="https://www.redteam.cafe/phishing/long-live-dmarc-email-spoof-issues">Long Live DMARC</a><p></p><p></p><a href="https://mail-tester.com">Check your mail rating</a><p></p><a href="https://dirteam.com/bas/2020/08/17/field-notes-dkim-and-missing-selector-records/">For DKIM Woes</a>    <p></p>
         </p>
 </div>
 

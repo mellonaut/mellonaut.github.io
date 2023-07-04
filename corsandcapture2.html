@@ -201,10 +201,7 @@
             <img class="article-image" src="assets/cors/categorycheck2.png" alt="Category">   
             <p></p>
             <img class="article-image" src="assets/cors/expired7.png" alt="Category">
-            <p></p>
-            For a breakdown of what all goes into these popularity rankings:
-            <p></p>
-            <a href="https://labs.ripe.net/author/samaneh_tajalizadehkhoob_1/the-tale-of-website-popularity-rankings-an-extensive-analysis/">The Tale of Website Popularity Rankings: An Extensive Analysis | RIPE Labs  </a>            
+            <p></p>For a breakdown of what all goes into these popularity rankings:<p></p><a href="https://labs.ripe.net/author/samaneh_tajalizadehkhoob_1/the-tale-of-website-popularity-rankings-an-extensive-analysis/">The Tale of Website Popularity Rankings: An Extensive Analysis | RIPE Labs  </a>            
         </p>
     </div>
 <p></p>
@@ -217,23 +214,14 @@
             <p></p>
             It's categorized, but not into one that makes me hopeful we'll  bypass corporate filters (unless it is the c-suite).
             <p></p>
-            Ultimately landed on a good reputation one categorized as "Religious", hoping that's a category that will provide some leeway. 
-            We'll re-deploy with terraform/ansible and get a new IP and hostname then point an A Record to it for our new holy rollin' domain. 
-            Once it's all in place, we'll have our contact try again and see they can access our page and see the lure. 
+            Ultimately landed on a good reputation one categorized as "Religious", hoping that's a category that will provide some leeway. We'll re-deploy with terraform/ansible and get a new IP and hostname then point an A Record to it for our new holy rollin' domain. Once it's all in place, we'll have our contact try again and see they can access our page and see the lure. 
         </p>
     </div>
     
     <p></p>
     <div class="text-box">
         <p class="center-block">
-            <h2> HTTPs and Updog </h2>
-            <p></p>
-            Let's grab a certificate for this site, we will need it at some point, even if Updog does what we need. 
-            <p></p>
-            I recommend certbot and LetsEncrypt, but you can do it manually, too,  if you hate yourself.
-            Make sure you change the domain and sub to yours, run the command and make note of your cert path.
-
-            <p></p>
+            <p></p><h2> HTTPs and Updog </h2><p></p>Let's grab a certificate for this site, we will need it at some point, even if Updog does what we need.<p></p> I recommend certbot and LetsEncrypt, but you can do it manually, too,  if you hate yourself. Make sure you change the domain and sub to yours, run the command and make note of your cert path.            <p></p>
             <div class="codebox">
                 <code>   
                     <span class="comment"># Point a "www" record to your server and run certbot with http challenge for a letsencrypt cert</span>
@@ -246,11 +234,7 @@
             </div>
             <p></p>
             <img class="article-image" src="assets/cors/letsencrypt1.png" alt="cors and capture 2">
-            <p></p>
-            You'll find them in /etc/letsencrypt/live/www.$domain.com
-                    <p></p>
-                    I like to copy them to a folder in home called "certs"
-                    <p></p>
+            <p></p>You'll find them in /etc/letsencrypt/live/www.$domain.com<p></p>I like to copy them to a folder in home called "certs"<p></p>
                     <div class="codebox">
                         <code>   
                             <span class="comment"># Copy certs to our home folder for ease-of-use</span>
@@ -262,15 +246,11 @@
                             ls ~/certs               
                         </code>
                     </div>
-            <p></p>
-            Updog has it's own SSL cert it uses when you use the '--ssl' option. I'd like to use ours but it's worth trying it out. 
-            If we need to,  Nginx and another server written in Go called Gosh  let you use custom certs. 
-            It also looks like Updog is just a flask application, a framework we're fairly comfortable with.
-            <p></p>
+            <p></p>Updog has it's own SSL cert it uses when you use the '--ssl' option. I'd like to use ours but it's worth trying it out. If we need to,  Nginx and another server written in Go called Gosh  let you use custom certs. It also looks like Updog is just a flask application, a framework we're fairly comfortable with.<p></p>
             <img class="article-image" src="assets/cors/updog3.jpg.png" alt="cors and capture 2">
             <img class="article-image" src="assets/cors/updog4.png" alt="cors and capture 2">
-            Note the similarities to the Capture server. Looks like we have a starting point if we feel the need to modify Updog, as well. In the morning our next objective is to test our new domain against the web-filter and the lure via Updog with SSL. 
-            If that works, we'll register a certificate for the capture server and I'll show you how to deploy it. Once we have a fully encrypted setup that works for everything, we'll do one final teardown, resize the servers for cost then deploy again and finish the automation in the process. 
+            
+            <p></p>Note the similarities to the Capture server. Looks like we have a starting point if we feel the need to modify Updog, as well. In the morning our next objective is to test our new domain against the web-filter and the lure via Updog with SSL. If that works, we'll register a certificate for the capture server and I'll show you how to deploy it. Once we have a fully encrypted setup that works for everything, we'll do one final teardown, resize the servers for cost then deploy again and finish the automation in the process. <p></p>
         </p>
     </div>
 
@@ -279,16 +259,9 @@
     <div class="text-box">
         <p class="center-block">
             <h2>Whiskey in the Jar</h2>
-            <p></p>
-            Updog turned into more hassle than I had hoped for, and I recorded none of that. 
-            It occurred to me later that using CORS and Updog behind caddy as a reverse proxy would've been a better use of time. 
-            Trying that first, but I was just moving, and it may have turned into a rabbit hole we didn't need. I'm glad I did it, I learned a ton and will put some of what I made to use elsewhere. 
-            I decided to take it's source code and strip it down to do the two tasks we need: serve static content and using our own SSL certficates. We'll add strict paths to it after we prototype.
+            <p></p>Updog turned into more hassle than I had hoped for, and I recorded none of that. It occurred to me later that using CORS and Updog behind caddy as a reverse proxy would've been a better use of time. Trying that first, but I was just moving, and it may have turned into a rabbit hole we didn't need. I'm glad I did it, I learned a ton and will put some of what I made to use elsewhere. I decided to take it's source code and strip it down to do the two tasks we need: serve static content and using our own SSL certficates. We'll add strict paths to it after we prototype.<p></p>
             <img class="article-image" src="assets/cors/flask1.png" alt="cors and capture 2">
-            <p></p>
-            It's called supdog, for "simplistic updog" but at this point it's barely an app much less a clone of updog but I learned it from that project and I like stupid names.  
-            All you have to do is copy your "cert.pem" and "privkey.pem" to the supdog folder. 
-            Place static content in the same foldcer in "static" "content" and the filename.
+            <p></p>It's called supdog, for "simplistic updog" but at this point it's barely an app much less a clone of updog but I learned it from that project and I like stupid names. All you have to do is copy your "cert.pem" and "privkey.pem" to the supdog folder. Place static content in the same foldcer in "static" "content" and the filename.
             <img class="article-image" src="assets/cors/flask2.png" alt="cors and capture 2">
             <p></p>
             Perfect. That's our dynamic lure serving over SSL using our LetsEncrypt certificate. 
@@ -300,40 +273,19 @@
     <div class="text-box">
         <p class="center-block">
             <h2>Live Test 2</h2>
-            Set an A record for our server, and went to deploy again…but I could not get the page to work, even on a local server.
-            I ended up creating a control file in the servers static folder using the flux-hosted CORS Anywhere:
-            <p></p>
+            Set an A record for our server, and went to deploy again…but I could not get the page to work, even on a local server. I ended up creating a control file in the servers static folder using the flux-hosted CORS Anywhere:<p></p>
             <img class="article-image" src="assets/cors/lureserver1.png" alt="cors and capture 2">
-            <p></p>
-            You can use this to troubleshoot with the Chrome dev tools (F12)
-            <p></p>
-            <img class="article-image" src="assets/cors/lureserver2.png" alt="cors and capture 2">
-            <p></p>
-            Let's go update our small Flask server for this file:
-            <p></p>
-            <img class="article-image" src="assets/cors/flask3.png" alt="cors and capture 2">
-            <p></p>
-            Back in our "lure-server.js" inside "\lure-server\cors-anywhere\" we need to make some changes
-            <p></p>
-            Let's remove our headers, we can add them back if we need to later
-            <p></p>
-            <p></p>
-            <img class="article-image" src="assets/cors/lureserver3.png" alt="cors and capture 2">
-            <p></p>
-            Test it live against a domain we want to redirect to.
-            <p></p>
-            Place <a href="https://cnn.com">CNN.com</a> at the end of your servers URL <a href="https://lure.trusteddomain.com/https://cnn.com">https://lure.trusteddomain.com/https://cnn.com</a>
-            <img class="article-image" src="assets/cors/lureserver4.png" alt="cors and capture 2">
-            <p></p>
-            Needed to do some troubleshooting using the Console in developer tools:
-            <p></p>
-            <img class="article-image" src="assets/cors/mixed1.png" alt="cors and capture 2">
-            <p></p>
-            I think the reason it displays on the live server in VS Code but not here is that mixed content policy. 
-            I guess now we need to get SSL working. I tried before, when working out the earlier parts of this and was unsuccessful. 
-            It started turning into a time sink and I decided to pull out and work on another part of the project. 
-            Now it's unavoidable and we don't really have an excuse anyway, except the time this all has taken. 
-        <p></p>
+<p></p>You can use this to troubleshoot with the Chrome dev tools (F12)<p></p>
+<img class="article-image" src="assets/cors/lureserver2.png" alt="cors and capture 2">
+<p></p>Let's go update our small Flask server for this file:<p></p>
+<img class="article-image" src="assets/cors/flask3.png" alt="cors and capture 2">
+<p></p>Back in our "lure-server.js" inside "\lure-server\cors-anywhere\" we need to make some changes<p></p>Let's remove our headers, we can add them back if we need to later<p></p>
+<img class="article-image" src="assets/cors/lureserver3.png" alt="cors and capture 2">
+<p></p>Test it live against a domain we want to redirect to.<p></p>Place <a href="https://cnn.com">CNN.com</a> at the end of your servers URL <a href="https://lure.trusteddomain.com/https://cnn.com">https://lure.trusteddomain.com/https://cnn.com</a>
+<img class="article-image" src="assets/cors/lureserver4.png" alt="cors and capture 2">
+<p></p>Needed to do some troubleshooting using the Console in developer tools:<p></p>
+<img class="article-image" src="assets/cors/mixed1.png" alt="cors and capture 2">
+<p></p>I think the reason it displays on the live server in VS Code but not here is that mixed content policy. I guess now we need to get SSL working. I tried before, when working out the earlier parts of this and was unsuccessful. It started turning into a time sink and I decided to pull out and work on another part of the project. Now it's unavoidable and we don't really have an excuse anyway, except the time this all has taken. <p></p>
         </p>
     </div>
 <p></p>
@@ -341,23 +293,11 @@
 <p></p>
     <div class="text-box">
         <p class="center-block">
-            <h2>Two Paths</h2>
-            <p></p>
-            We need an SSL proxy for this Cors-Anywhere. I think we need to look at the example we first saw in the Issues of the Cors-Anywhere repo. Someone was discussing this there when I was researching how to self host this thing. It didn't work out iof the box and I didn't have what it took to troubleshoot that. If I don't have it now I'm about to get it.
-            <p></p>
-            The reason this was working before is because I was hosting the second cors service on Capture server.
-            Having our resources on a separate domain prevented the mixed content error. If I was in a rush to use it, that would be my next goal, re-deploy that and edit the javascript for the hosted lure.
-            Let's call that plan C, for cop-out, and leave it with our patient parts. Let's see if we can get this running over SSL.
-            <p></p>
-            We need to edit the lure-server.js first (again) to run on port 8443. We're going to run Caddy a really cool reverse-proxy that will let us proxy traffic between our cors service and the world. We won't need the custom "straylight" headers and can run multiple services like flask and our node cors server like a backend on the same port.  
-            <p></p>
+            <h2>Two Paths</h2><p></p>We need an SSL proxy for this Cors-Anywhere. I think we need to look at the example we first saw in the Issues of the Cors-Anywhere repo. Someone was discussing this there when I was researching how to self host this thing. It didn't work out iof the box and I didn't have what it took to troubleshoot that. If I don't have it now I'm about to get it.<p></p>The reason this was working before is because I was hosting the second cors service on Capture server.Having our resources on a separate domain prevented the mixed content error. If I was in a rush to use it, that would be my next goal, re-deploy that and edit the javascript for the hosted lure.Let's call that plan C, for cop-out, and leave it with our patient parts. Let's see if we can get this running over SSL.<p></p>We need to edit the lure-server.js first (again) to run on port 8443. We're going to run Caddy a really cool reverse-proxy that will let us proxy traffic between our cors service and the world. We won't need the custom "straylight" headers and can run multiple services like flask and our node cors server like a backend on the same port.  <p></p>
             <img class="article-image" src="assets/cors/lureserver5.png" alt="cors and capture 2">
-            <p></p>
-            This works. It's a basic config. It adds the required headers we need. We could easily tell it here to add our custom headers if we want to.  I'll put in the "caddy" folder in the repo and call it "CORS-Caddyfile"
+            <p></p>This works. It's a basic config. It adds the required headers we need. We could easily tell it here to add our custom headers if we want to.  I'll put in the "caddy" folder in the repo and call it "CORS-Caddyfile"
             <img class="article-image" src="assets/cors/caddy1.png" alt="cors and capture 2">
-            <p></p>
-            We have the proxy running on port 443 with our letencrypt certificate and the CORS service is being proxied successfully.
-            <p></p>
+            <p></p>We have the proxy running on port 443 with our letencrypt certificate and the CORS service is being proxied successfully.<p></p>
  
         </p>
     </div>
@@ -366,29 +306,11 @@
 <p></p>
     <div class="text-box">
         <p class="center-block">
-            <h2>Updog Revisited</h2>
-            <p></p>
-            What we're going to try today is what I should have tried earlier this week, placing updog behind the same proxy as CORS. I was having trouble with the proxy itself more than anything at that point. Looking back over everything, we had updog working, but the domain was bad. In our haste, we moved towards a seemingly "better" solution that looked easy to implement.
-            It looked easy, but web development is not a strong skill of mine, it's one I'm workingto improve. What this means for me is if I think the solution to my problem lies in a direction I'm "okay" at, I should probably double the effort and triple the amount of time I think it will take to make it work. 
-            <p></p>
-            That's definitely what happened here, I went at a new solution without knowing what complexity it was going to add, and my fundamentals were not strong enough in web to carry me through gracefully. Here I had a lot to learn, and the time it added was significant. Once again, the knowledge we gained was beyond worth it. If I had a team of operators waiting for it it would've been a nightmare, and we may have ended up with something hackier. We have the time, so we use the time. 
-            <p></p>
-            Okay, let's move this over to the lure server and try it with updog using "CONTENT-Caddyfile"
-            <p></p>
+            <h2>Updog Revisited</h2><p></p>What we're going to try today is what I should have tried earlier this week, placing updog behind the same proxy as CORS. I was having trouble with the proxy itself more than anything at that point. Looking back over everything, we had updog working, but the domain was bad. In our haste, we moved towards a seemingly "better" solution that looked easy to implement.It looked easy, but web development is not a strong skill of mine, it's one I'm workingto improve. What this means for me is if I think the solution to my problem lies in a direction I'm "okay" at, I should probably double the effort and triple the amount of time I think it will take to make it work. <p></p>That's definitely what happened here, I went at a new solution without knowing what complexity it was going to add, and my fundamentals were not strong enough in web to carry me through gracefully. Here I had a lot to learn, and the time it added was significant. Once again, the knowledge we gained was beyond worth it. If I had a team of operators waiting for it it would've been a nightmare, and we may have ended up with something hackier. We have the time, so we use the time. <p></p>Okay, let's move this over to the lure server and try it with updog using "CONTENT-Caddyfile"<p></p>
             <img class="article-image" src="assets/cors/contentcaddyfile1.png" alt="cors and capture 2">
-            <p></p>
-            I took the CORS Caddyfile and made a version that should serve updog. We will have to tell it to add the ?view param later, I want to see it work in a simpler form first. 
-            Another lesson learned here is that I can't judge how much complexity a seemingly small thing can add yet.
-            <p></p> 
-            That will come with more experience but It doesn't have to display, if everything looks right with curl we will add that later. 
-            It's easier to add another block from a stable foundation. I feel like I spend a lot of time performing surgery like a ship in a bottle trying to troubleshoot back through things I've added.
-            <p></p>
+            <p></p>I took the CORS Caddyfile and made a version that should serve updog. We will have to tell it to add the ?view param later, I want to see it work in a simpler form first. Another lesson learned here is that I can't judge how much complexity a seemingly small thing can add yet.<p></p> That will come with more experience but It doesn't have to display, if everything looks right with curl we will add that later. It's easier to add another block from a stable foundation. I feel like I spend a lot of time performing surgery like a ship in a bottle trying to troubleshoot back through things I've added.<p></p>
             <img class="article-image" src="assets/cors/shipbottle1.png" alt="cors and capture 2">
-            <p></p>
-            Ensure caddy is running, start your backend cors service on 8443 in tmux session, start updog on 5000 using ssl in its own tmux session. 
-            You background a tmux session with "Ctrl+b" then tap "d".  Tmux is like the vim of shells, capable of wizardy in good hands, a fumbly mess in others. 
-            It's starting to feel more natural now, for tmux at least.
-            <p></p>
+            <p></p>Ensure caddy is running, start your backend cors service on 8443 in tmux session, start updog on 5000 using ssl in its own tmux session. You background a tmux session with "Ctrl+b" then tap "d".  Tmux is like the vim of shells, capable of wizardy in good hands, a fumbly mess in others. It's starting to feel more natural now, for tmux at least.<p></p>
             <!-- Codebox -->
             <p></p>
             <div class="codebox">
@@ -410,10 +332,8 @@
                     <span class="comment"># Ctrl+b +d to background tmux</span>                                    
                 </code>
             </div>
-            <p></p>
-            <p></p>
-            Not a moment after shit-talking vim, I need it for something and it mangles my copy paste:
-            <p></p>
+       
+<p></p>Not a moment after shit-talking vim, I need it for something and it mangles my copy paste:<p></p>
             <img class="article-image" src="assets/cors/vim1.png" alt="cors and capture 2">
             <figcaption><i>We angered the gods. The Awk-Sed-Grep gods.</i></figcaption>
         </p>
@@ -423,18 +343,11 @@
 <p></p>
     <div class="text-box">
         <p class="center-block">
-            <h2>Development Hell</h2>
-            Tried testing and it wouldn't work now. We had this working this morning, the same config is in place, we disabled the service, tried to load various config files manually and still got error, and rebooted because that's what you do when you're stuck. Now…
-            <p></p>
+            <h2>Development Hell</h2>Tried testing and it wouldn't work now. We had this working this morning, the same config is in place, we disabled the service, tried to load various config files manually and still got error, and rebooted because that's what you do when you're stuck. Now…<p></p>
             <img class="article-image" src="assets/cors/caddy2.png" alt="cors and capture 2">
-            <p></p>
-            We lost some time to troubleshooting this. What it was? Permission on the certificate was wrong. 
-            Caddy needed permissions. These error messages aren't very helpful. ChatGPT really helps you parse these logs and make sense of things. 
-            <p></p>
+            <p></p>We lost some time to troubleshooting this. What it was? Permission on the certificate was wrong. Caddy needed permissions. These error messages aren't very helpful. ChatGPT really helps you parse these logs and make sense of things. <p></p>
             <img class="article-image" src="assets/cors/chatgpt2.png" alt="cors and capture 2">
-            <p></p>
-            It can help you figure out what to google, sometimes it can answer you directly if the problem is simple or seen often enough.
-            <p></p>
+            <p></p>It can help you figure out what to google, sometimes it can answer you directly if the problem is simple or seen often enough.<p></p>
             <img class="article-image" src="assets/cors/caddy3.png" alt="cors and capture 2">
             <figcaption><i>Changed the permissions  and caddy started up, let's test the CORS proxy.</i></figcaption>
             <p></p>
@@ -448,64 +361,32 @@
             <p></p>
             <img class="article-image" src="assets/cors/haackernews1.png" alt="cors and capture 2">
             <figcaption><i>We can redirect to Hacker News</i></figcaption>
-            <p></p>
-            Let's copy the working config Caddyfile to working.Caddyfile and rename Caddyfile2 to Caddyfile. We'll put that config in the originals place and restart the service.
-            <p></p>
+            <p></p>Let's copy the working config Caddyfile to working.Caddyfile and rename Caddyfile2 to Caddyfile. We'll put that config in the originals place and restart the service.<p></p>
             <!-- Codebox  -->
             <div class="codebox">
-                <code>
-                    sudo mv /etc/caddy/Caddyfile /etc/caddy/working.Caddyfile && sudo cp ~/yourcorsanywhere/caddy/Caddyfile /etc/caddy/Caddyfile
-                    <p></p>
-                    sudo systemctl restart caddy
-                    <p></p>
-                    sudo systemctl status caddy
+                <code>sudo mv /etc/caddy/Caddyfile /etc/caddy/working.Caddyfile && sudo cp ~/yourcorsanywhere/caddy/Caddyfile /etc/caddy/Caddyfile<p></p>sudo systemctl restart caddy<p></p>sudo systemctl status caddy
             </code>
             </div>
             <!--  End codebox -->
-            <p></p>
-            <p></p>
-            We got a 502 bad gateway error. The gateway is between Caddy and Flask. I wonder if it's with the weird updog cert.
-            <p></p>
+            <p></p>We got a 502 bad gateway error. The gateway is between Caddy and Flask. I wonder if it's with the weird updog cert.<p></p>
             <img class="article-image" src="assets/cors/502.png" alt="cors and capture 2">
-            <p></p>
-            Let's troubleshoot from the updog side first.
-            <p></p>
+            <p></p>Let's troubleshoot from the updog side first.<p></p>
             <img class="article-image" src="assets/cors/updog5.png" alt="cors and capture 2">            
-            <p></p>
-            Not super proud of that folder name but I stand by it. Looks like requests are getting from Caddy to Updog. 
-            First set was with SSL and the second was attempting ssl after turned off.  An http request didn't work either. Minor change to Caddyfile to ignore SSL errors on 5000 
-            <p></p>
+            <p></p>Not super proud of that folder name but I stand by it. Looks like requests are getting from Caddy to Updog. First set was with SSL and the second was attempting ssl after turned off.  An http request didn't work either. Minor change to Caddyfile to ignore SSL errors on 5000 <p></p>
             <img class="article-image" src="assets/cors/caddy4.png" alt="cors and capture 2">
-            <p></p>
-            I moved the "test.html" up a level so theres one in both folders and tried again...
-            <p></p>
-            and…             
-            <p></p>
+            <p></p>I moved the "test.html" up a level so theres one in both folders and tried again...<p></p>and…<p></p>
             <img class="article-image" src="assets/cors/success.png" alt="cors and capture 2">
             <figcaption><i>Holy shit!</i></figcaption>
-            <p></p>
-            Let's add that '?view" parameter.
+            <p></p>Let's add that '?view" parameter.
             <img class="article-image" src="assets/cors/view1.png" alt="cors and capture 2">
             <p></p>
             <img class="article-image" src="assets/cors/finally1.png" alt="cors and capture 2">
-            <p></p>
-            That's game! Over https, proxying CORS, serving our dynamic lure with no weird certificate errors like this we got earlier when we tried:
-            <p></p>
+            <p></p>That's game! Over https, proxying CORS, serving our dynamic lure with no weird certificate errors like this we got earlier when we tried:<p></p>
             <img class="article-image" src="assets/cors/updog6.png" alt="cors and capture 2">
             <figcaption><i>Warning from using Updog</i></figcaption>
-            <p></p>
-            The adhoc SSL certificate updog uses is not trusted, it's self-signed and because Updog is only used for development and testing that doesn't matter.
-             It matters to us, as we need this to look like a quality site. What we essentially are doing is laid out here:
+            <p></p>The adhoc SSL certificate updog uses is not trusted, it's self-signed and because Updog is only used for development and testing that doesn't matter.It matters to us, as we need this to look like a quality site. What we essentially are doing is laid out here:
              <img class="article-image" src="assets/cors/diagram1.png" alt="cors and capture 2">
-             <p></p>
-            Now we can put our lure together using this and finish the automation. I'm going to include an AWS deploy script, the sorrowset project I use to configure the lure server, capture server, create tmux sessions…basically load your lure and turn the key.
-            <p></p>
-            I'm tired though. Check back for Part 3 where I show you how to turn this whole thing into an infrastructure-as-code solution you can just use. You'll have options and literally everything you need to learn how to make cool cloud stuff your self.
-            <p></p>
-            <p></p>
-            <p></p>
-            <h5>Check out Part 3:</h5>
-            <p></p>
+             <p></p>Now we can put our lure together using this and finish the automation. I'm going to include an AWS deploy script, the sorrowset project I use to configure the lure server, capture server, create tmux sessions…basically load your lure and turn the key.<p></p>I'm tired though. Check back for Part 3 where I show you how to turn this whole thing into an infrastructure-as-code solution you can just use. You'll have options and literally everything you need to learn how to make cool cloud stuff your self.<p></p><h5>Check out Part 3:</h5><p></p>
             <img class="article-image-narrow" src="assets/cors/automateautomate.png" alt="Thumbnail Image">
             <p><a href="corsandcapture3.html">CORS and Capture Part 3: Automate, Automate, Such a Simple Plan</a></p>              
 

@@ -127,7 +127,7 @@
     <div class="top-banner">
         <img src="assets/straylight.jpg" alt="Banner Image">
         <div>
-            <h1>CORS and Capture Part 3: Automate, Automate, Such a Simple Plan</h1>
+            <h1>CORS and Capture Part 3: Another Brick in the Wall</h1>
         </div>
     </div>
     <div class="navbar">
@@ -147,9 +147,8 @@
         <p class="center-block">
             <h2>Putting it All Together</h2>
             Welcome back to part 3 of this series where we developed a solution for serving a dynamic device code page and retrieving the token from the endpoint. 
-            This let's us get arounds the 15 minute time-to-live that was bothering me so much. The first two Parts <a href"">Part 1</a> and <a href"">Part 2</a> saw us develop our proof-of-concept and get through the hurdles to having it run. 
-            We touched briefly on the deployment of these servers and the scripts and I apologize for that, it's hard to decide when to go into what as we covered a bunch of topics on this project. 
-            This article will go itno more detail on that and demonstrate deployment through the full attack chain for this setup, how to use it, etc..
+            This let's us get arounds the 15 minute time-to-live that was bothering me so much. The first two arts saw us develop our proof-of-concept and get through the hurdles to having it run. 
+            We touched briefly on the deployment of these servers and the scripts and I apologize for that, it's hard to decide when to go into what as we covered a bunch of topics on this project. This article will go itno more detail on that and demonstrate deployment through the full attack chain for this setup, how to use it, etc..
         <p></p>
         </p>
     </div>
@@ -208,16 +207,9 @@
                 <p></p>
                 <img class="article-image" src="assets/cors/capture2.png" alt="Cors and Capture 3">
                 <p></p>
+                We still clone TokenTactics and TokenTacticsV2 like we did but we've added our cors repo and pointed the sections about the capture server to our version located in "yourcorsanywhere/capture-server/capturetoken.py. It will create it's own LetsEncrypt certificate and we copy that now to our repo since we're serving with those certificates. I included ".pem" in the .gitignore to be safe, but don't make any commits from this server. Consider it a one way repo, clone it, make your changes for the operation and use it temporarily. Don't push secrets, you get really big  bills and none of the mined crypto. Trust me..
                 <p></p>
-                We still clone TokenTactics and TokenTacticsV2 like we did but we've added our cors repo and pointed the sections about the capture server to our version located in "yourcorsanywhere/capture-server/capturetoken.py. 
-                It will create it's own LetsEncrypt certificate and we copy that now to our repo since we're serving with those certificates. I included ".pem" in the .gitignore to be safe, but don't make any commits from this server. 
-                Consider it a one way repo, clone it, make your changes for the operation and use it temporarily. Don't push secrets, you get really big  bills and none of the mined crypto. Trust me..
-                <p></p>
-                We then use tmux to create the session for the capture server. My friend showing me Tmux was a true gift, it's made my life so much easier. 
-                You can log into your server and create a persistent session for each thing you want to run. 
-                If your shell dies, it will still run until shutdown or closed, but it's not as bulky as running it as a true service.
-                For what we do it's perfect and the fact that it's scriptable is really cool. I've never tried it in an azure deployment so let's we what we get. 
-                <p></p>
+                We then use tmux to create the session for the capture server. My friend showing me Tmux was a true gift, it's made my life so much easier. You can log into your server and create a persistent session for each thing you want to run. If your shell dies, it will still run until shutdown or closed, but it's not as bulky as running it as a true service. For what we do it's perfect and the fact that it's scriptable is really cool. I've never tried it in an azure deployment so let's we what we get. 
                 <p></p>
                 <img class="article-image" src="assets/cors/capture3.png" alt="Cors and Capture 3">
                 <p></p>
@@ -247,20 +239,12 @@
                 <p></p>
                 <img class="article-image" src="assets/cors/capture9.png" alt="Cors and Capture 3">
                 <p></p>
-                This one drove me a little crazy. You have to start powershell and install in the same command so it's in the same powershell session, if you try "pwsh" as one command and the "Install-Module" as two commands, i.e. like I tried "pwsh; Install-Module"
-                 It wants the commands one by one.
-                "pwsh && Install-Module" wouldn't either, it can't transfer from bash to powershell like that, but I feel like someone like my friend could make that work. He goes in on bash and linux internals where I just mostly love and use it. Sometimes we both have a project that's with some weird OS internal so I get to share my weird stuff about the windows api and learn about how the linux kernel works. You need to pass the "-c" argument to tell it we want to start powershell and specify a command for powershell to run.
+                This one drove me a little crazy. You have to start powershell and install in the same command so it's in the same powershell session, if you try "pwsh" as one command and the "Install-Module" as two commands, i.e. like I tried "pwsh; Install-Module". It wants the commands one by one. Trying "pwsh && Install-Module" didnt work either. You need to pass the "-c" argument to tell it we want to start powershell and specify a command for powershell to run.
                 <p></p>
                 <img class="article-image" src="assets/cors/capture10.png" alt="Cors and Capture 3">
-                We got it working, we logged into the server and verify tmux session is active, but not serving flask.
-                <p></p>
-                To troubleshoot, let's try and run the command 
-                <p></p>                
+                We got it working, we logged into the server and verify tmux session is active, but not serving flask.<p></p>To troubleshoot, let's try and run the command.<p></p>                
                 <img class="article-image" src="assets/cors/capture11.png" alt="Cors and Capture 3">
-                <p></p>
-                We had python instead of Python3. Gets me all the time. Helps to be specific. We still ended up having trouble with sending the tmux command through run command. I'm okay with needing to start the capture session manually, I'll auto-shutdown/redeploy everyday anyway, but I'll put some time in trying to figure this out later on.
-                <p></p>        
-                <p></p>
+                <p></p>We had python instead of Python3. Gets me all the time. Helps to be specific. We still ended up having trouble with sending the tmux command through run command. I'm okay with needing to start the capture session manually, I'll auto-shutdown/redeploy everyday anyway, but I'll put some time in trying to figure this out later on.<p></p>                        <p></p>
             </p>
         </div>
         <p></p>
@@ -268,10 +252,7 @@
         <p></p>
             <div class="text-box">
                 <p class="center-block">
-                    <h2>Lure Server</h2>
-                    This was pretty straight forward, AWS makes it easy to deploy, as well, though, you can't just run commands on a VM. You have to supply a shell script in the form of user data:
-                    <p></p>                    
-                    <p></p>                
+                    <h2>Lure Server</h2><p></p>This was pretty straight forward, AWS makes it easy to deploy, as well, though, you can't just run commands on a VM. You have to supply a shell script in the form of user data:<p></p>                
                     <img class="article-image" src="assets/cors/lure1.png" alt="Cors and Capture 3">
                     <p></p>
                     <p></p>
