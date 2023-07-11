@@ -86,7 +86,8 @@ const app = new Vue({
       this.currentPost = this.posts[index];
       // We added this to create a fragment identifier for the "id"
       // The URL will show site.com/#post1
-      window.location.hash = this.currentPost.id;
+      // window.location.hash = this.currentPost.id;
+      window.location.hash = String(this.currentPost.id);
       setTimeout(() => {
         this.ready = true;
       }, 600);
@@ -118,19 +119,20 @@ const app = new Vue({
     }
   },
   created() {
-      window.addEventListener("keydown", e => {
-        e.keyCode == 39 ? this.nextPost() : false;
-        e.keyCode == 37 ? this.prevPost() : false;
-        e.keyCode == 27 ? this.closePost() : false;
-      });
-    
-      // If a hash is present in the URL when the page is loaded, select the corresponding post
-      if (window.location.hash) {
-        const postId = window.location.hash.substring(1); // remove the '#' from the start of the hash
-        const postIndex = this.posts.findIndex(post => post.id === postId);
-        if (postIndex !== -1) { // if a post with the id from the hash was found
-          this.selectedPost(postIndex);
-        }
+    window.addEventListener("keydown", e => {
+      if (e.keyCode === 39) this.nextPost();
+      if (e.keyCode === 37) this.prevPost();
+      if (e.keyCode === 27) this.closePost();
+    });
+  
+    // If a hash is present in the URL when the page is loaded, select the corresponding post
+    if (window.location.hash) {
+      const postId = window.location.hash.substring(1); // remove the '#' from the start of the hash
+      const postIndex = this.posts.findIndex(post => String(post.id) === postId);
+      if (postIndex !== -1) { // if a post with the id from the hash was found
+        this.selectedPost(postIndex);
       }
     }
+  }
+  
   });
