@@ -1,7 +1,7 @@
 const posts = [
   {
       id: 1,
-    title: "Straylight Security",
+    title: "Straylight Blog - An Anthology of Failure",
     date: "2023",
     description: "<p><h1>Dev. Sec. Oops.</h1><p></p><img class='post-article__image' src='https://blog.straylightsecurity.com/assets/lich3.jpg' alt='Description of the image'><p></p>A development blog, personal and technical, with a focus on Microsoft security and the Azure cloud. Stories, bad memes and code review. <p></p><h3>Github</h3><p><a href='https://github.com/mellosec'>Mellosec - Coding Projects</a></p><h3>Certifications:</h3><p><a href='https://training.zeropointsecurity.co.uk/courses/red-team-ops'>(In progress) CRTO - Certified Red Team Operator</a></p><p><a href='https://learn.microsoft.com/en-us/certifications/exams/sc-200/'>MS SC-200 - Microsoft Security Operations Analyst</a></p><p><a href='https://elearnsecurity.com/product/ejpt-certification/'>eJPT - eLearnSecurity Junior Penetration Tester</a></p><p><a href='https://learn.microsoft.com/en-us/certifications/exams/az-104/'>AZ-104 - Azure Administrator Associate</a></p><p>Email: <a href='mailto:mellonaut@straylightsecurity.com'>mellonaut@straylightsecurity.com</a></p><\/p>",
     image: "https://blog.straylightsecurity.com/assets/straylight.jpg",
