@@ -1,7 +1,7 @@
 const posts = [
   {
     id: 1,
-    title: "Straylight Blog: An Anthology of Failures",
+    title: "Straylight Blog: An Anthology of Failure",
     date: "2023",
     description: "<p><h1>Dev. Sec. Oops.</h1><p></p><img class='post-article__image' src='https://blog.straylightsecurity.com/assets/lich3.jpg' alt='Description of the image'><p></p>A development blog, personal and technical, with a focus on Microsoft security and the Azure cloud. Stories, bad memes, and code review.  This will will help track my progress towards red team operator, let me do in depth write-ups on some of the tools I've made over the last couple of years to help myself and share cheatsheets, code and techniques that have worked for me lately. So much of learning security has been reading old blogs, and new blogs based on the old blogs. Feel like it's my turn. The only reason I was able to learn and grow is because people shared their thoughts online, so here we go.<p></p><h3>Github</h3><p><a href='https://github.com/mellosec'>Mellosec - Coding Projects</a></p><h3>Certifications:</h3><p><a href='https://training.zeropointsecurity.co.uk/courses/red-team-ops'>(In progress) CRTO - Certified Red Team Operator</a></p><p><a href='https://learn.microsoft.com/en-us/certifications/exams/sc-200/'>MS SC-200 - Microsoft Security Operations Analyst</a></p><p><a href='https://elearnsecurity.com/product/ejpt-certification/'>eJPT - eLearnSecurity Junior Penetration Tester</a></p><p><a href='https://learn.microsoft.com/en-us/certifications/exams/az-104/'>AZ-104 - Azure Administrator Associate</a></p><p>Email: <a href='mailto:mellonaut@straylightsecurity.com'>mellonaut@straylightsecurity.com</a></p><\/p>",
     image: "https://blog.straylightsecurity.com/assets/straylight.jpg",
