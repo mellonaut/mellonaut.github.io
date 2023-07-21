@@ -86,18 +86,30 @@ p.center-block {
     border-radius: 10px; /* Optional, to make the box corners rounded */
 }
 
+.oldcode-snippet {
+    width: 66%;
+    margin: auto;
+    border: 1px solid black;
+    padding: 10px;
+    font-family: monospace;
+    white-space: pre;
+    word-wrap: break-word;
+    background: #333;  /* Dark grey background */
+    color: #fff;  /* White text color */
+}
+
 .code-snippet {
     width: 66%;
     margin: auto;
     border: 1px solid black;
     padding: 10px;
     font-family: monospace;
-    white-space: pre-wrap;
+    white-space: pre;
     word-wrap: break-word;
-    background: #333;  /* Dark grey background */
-    color: #fff;  /* White text color */
+    background: #333;
+    color: #fff;
+    display: block; /* Ensure the code snippet is displayed as a block element */
 }
-
 .code-snippet code .comment {
     color: #008000;  /* Green color for comments */
 }
