@@ -11,8 +11,8 @@ const posts = [
     id: 20,
     title: "Graboid and Pipelines: Iterations on a Stealer",
     date: "September 28 2023",
-    description: "<p><h1>Thievery Corp</h1><p></p><img class='post-article__image' src='https://blog.straylightsecurity.com/assets/graboid/Sorrowset-V3.png' alt='Description of the image'><p></p></p><\/p>",
-    image: "https://blog.straylightsecurity.com/assets/graboid/Sorrowset-V3.png",
+    description: "<p><h1>Thievery Corp</h1><p></p><img class='post-article__image' src='https://dev.straylightsecurity.com/assets/graboid/Sorrowset-V3.png' alt='Description of the image'><p>Stealer malware has seen a huge surge in the last year, as security projects begin to close the gaps around initial access with EDR/XDR and the signaturing of new C2 frameworks as they are released.  Even custom code, if it's delivered via O365 will get caught between Defender for Office, Defender for Endpoint, Defender for Cloud Apps, etc. I got really stuck on wanting to write a payload that flew a little but under the radar. I ended up with a modular design for an assembly loader with stagers and Azure Function redirectors. It would pull it's componenets through the redirector and load them in memory to keep them off of disk. It was a long road, completely re-written three times to get to get something decent, and this was my first introduction to unit/integration tests and maintaining a decent sized application correctly in a DevOps pipeline. The automation has saved me so much time and frustration, unit testing and integration tests feel like this gift from god now that I understand my own code a little bit. Let's dig in and check it out.  </p></p><\/p>",
+    image: "https://dev.straylightsecurity.com/assets/graboid/Sorrowset-V3.png",
     clip_path: "polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)"
   },
   {
