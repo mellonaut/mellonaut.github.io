@@ -122,22 +122,10 @@
       -16 -16 -33 -20 -80 -20 l-60 0 0 61 0 61 66 -4 c50 -3 70 -9 80 -23z m4186 7
       c18 -18 14 -73 -7 -88 -11 -8 -44 -14 -77 -14 l-58 0 0 61 0 61 65 -4 c36 -2
       70 -9 77 -16z"/> </g> </svg>
-      <!-- Added On-Click magnify for the post-view -->
         </div>
-        <!-- <div :class="['post-view', selected ? 'post-view--active' : '' , ready ? 'post-view--ready' : '' ]">
-          <div class="post-view__image" :style="'background-image:url('+postImage+');clip-path:'+clipPath"
-          @click="toggleImageMagnify"
-          >
-
-          </div> -->
-          <div 
-            class="post-view__image" 
-            :style="'background-image:url('+postImage+');clip-path:'+clipPath" 
-            @click="toggleImageMagnify"
-            :class="{ 'post-view__image--magnified': isImageMagnified }"
-          >
+        <div :class="['post-view', selected ? 'post-view--active' : '' , ready ? 'post-view--ready' : '' ]">
+          <div class="post-view__image" :style="'background-image:url('+postImage+');clip-path:'+clipPath">
           </div>
-
           <div class="post-view__container" v-if="selected">
             <div class="post-controls">
               <div class="post-control post-control--close" @click="closePost()"><i class="ion-ios-close-empty"></i></div>
