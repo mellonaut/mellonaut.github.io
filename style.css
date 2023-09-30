@@ -133,6 +133,11 @@ body {
   top: 50%;
   margin-top: -225px;
 }
+.post-view__image--magnified {
+  transform: scale(1.5);
+  transition: transform 0.3s;
+}
+
 .post-view__container {
   position: absolute;
   top: 100px;
